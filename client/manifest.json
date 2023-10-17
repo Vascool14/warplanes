@@ -1,0 +1,16 @@
+{
+    "name": "Warplanes",
+    "short_name": "Warplanes",
+    "description": "Multiplayer strategy game",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#032444",
+    "theme_color": "#032444",
+    "icons": [
+        {
+            "src": "/airplane.webp",
+            "sizes": "128x128",
+            "type": "image/webp"
+        }
+    ]
+}

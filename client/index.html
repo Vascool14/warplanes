@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/airplane.webp" sizes="128x128" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- mobile capable -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="apple-touch-icon" href="/airplane.webp" />
+    <link rel="apple-touch-startup-image" href="/airplane.webp" />
+    <link rel="manifest" href="/manifest.json" />
+    <title>Warplanes</title>
+  </head>
+  <body style="margin: 0; padding: 0">
+    <div id="root" style="background-color: #032444; min-height: 100vh; min-width: 100vw;">
+      <div class="loader">
+        <style>
+          .loader { position:absolute; top:calc(50% - 18px); left:calc(50% - 18px); 
+            border: 4px solid #fff; border-left-color: transparent; border-radius: 50%; 
+            width: 36px; height: 36px; animation: spin89345 1s linear infinite;} 
+          @keyframes spin89345 {0% {transform: rotate(0deg);}100% {transform: rotate(360deg);}}
+        </style>
+      </div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
