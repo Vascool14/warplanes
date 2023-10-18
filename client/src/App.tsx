@@ -6,6 +6,8 @@ const Menu = lazy(() => import('./components/Menu'))
 const Toast = lazy(() => import('./components/Toast'))
 const Scene = lazy(() => import('./scene/Scene'))
 const Tables = lazy(() => import('./pages/Tables'))
+const BotGame = lazy(() => import('./pages/BotGame'))
+const Game = lazy(() => import('./pages/Game'))
 
 import axios from 'axios'
 import './App.css'
@@ -30,19 +32,22 @@ export default function App() {
             </div>
             }
         </section>
-        <div className={`transition-all w-screen h-screen duration-300 z-10 ${state.menuOpen && '-translate-x-[min(70vw,20rem)]'}`}>
+        <div className={`transition-all w-screen h-screen duration-300 z-10 ${state.menuOpen && '-translate-x-[min(70vw,25rem)]'}`}>
             <Suspense fallback={null}>
                 <div style={{zIndex: 100}}>
                     <Menu />
                     <div className="fixed w-[4rem] right-[-0.8rem] top-[-1.1rem] flex items-center justify-center m-[var(--padding)] rounded-full z-[101] cursor-pointer transition-all" 
                     onClick={() => setState({...state, menuOpen: !state.menuOpen})}
-                    style={{transform: state.menuOpen?'rotate(45deg)':'rotate(0)'}}><h2>+</h2></div>
+                    style={{transform: state.menuOpen?'rotate(45deg)':'rotate(0)'}}><h1>+</h1></div>
                     <Toast toast={state.toast} />
                 </div>
                 <Routes>
                     <Route path="/" element={<Home />} />
                     {/* <Route path="/account" element={<Account />} /> */}
                     <Route path="/tables" element={<Tables />} />
+                    <Route path="/tables/bot-vasile" element={<BotGame bot="vasile" />} /> 
+                    <Route path="/tables/bot-ioana" element={<BotGame bot="ioana" />} />
+                    <Route path="/tables/:id" element={<Game />} />
                     <Route path="/scene" element={<Scene theme={state.theme} />} />
                 </Routes>
             </Suspense>

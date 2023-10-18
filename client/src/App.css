@@ -88,22 +88,31 @@ button:active .buttonTop {transform: translateY(0);}
     background: linear-gradient(transparent 0%, var(--sky) 45%, var(--sky) 55%, transparent 70%);
 }
 
-/* table */
-.table{    
-    background: var(--text);
-    width: 100%;
-    position: relative;
-    color: var(--bg);
-    border-radius: calc(var(--radius) + 0.5rem);
-    padding: 0.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 0.5rem;
+/* tile */
+.board{
+    display: flex ;
+    flex-wrap: wrap;
+    aspect-ratio: 1/1;
 }
-.table h3{
-    padding: 0.25rem 0.5rem 0 0.5rem;
-    display: flex;  
-    white-space: nowrap;
-    align-items: center;
+.board .tile{
+    width: 10%;
+    height: 10%;
+    background: var(--gray);
+    border: 1px solid var(--sky);
+    border-radius: 0.2rem;
+    transition: all 0.s ease;
+}
+.board .tile.enemy:hover{
+    border: 2px solid var(--gray);
+}
+.board .tile.enemy:active{
+    background: var(--sky);
+    border: none;
+}
+@media not all and (min-width: 640px){
+    .board{ width: 40vh; height: 100%; }
+}
+@media (min-width: 640px) {
+    .board {  width: 100%; max-width: 40rem; }
+    .board .tile { border-width: 2px; border-radius: 0.4rem;}
 }

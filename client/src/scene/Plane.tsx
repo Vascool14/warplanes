@@ -2,9 +2,9 @@ import { useGLTF } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useRef } from 'react'
 
-export function Plane({spin, position, rotation}){
+export function Plane({spin, position, rotation}:{spin: boolean, position: [number, number, number], rotation: 'up'|'down'|'left'|'right'|'none'}) {
   const { nodes, materials } = useGLTF('/src/scene/scene.gltf');
-  const planeRef = useRef();
+  const planeRef = useRef<any>();
   useFrame(() => {
     if(spin){
       planeRef.current.rotation.z += 0.2 % Math.PI * 2;

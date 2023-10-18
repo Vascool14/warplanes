@@ -12,7 +12,7 @@ export default function Menu() {
     } 
     return (   
         <>
-        <aside className="z-[100] overflow-hidden shadow-lg bg-[var(--bg)] translate-x-[100%] h-screen w-[min(70vw,20rem)] 
+        <aside className="z-[100] overflow-hidden shadow-lg bg-[var(--bg)] translate-x-[100%] h-screen w-[min(70vw,25rem)] 
         fixed right-0 transition-all flex flex-col items-center gap-4 p-6">
 
             <style>

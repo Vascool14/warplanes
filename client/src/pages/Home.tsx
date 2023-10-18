@@ -13,19 +13,20 @@ export default function Home() {
             <Link to="/tables" className='mt-auto'>
                 <Button text='Play as guest' />
             </Link>
-            {user?.username ? <Link to="/tables">
+            {user?.username ? 
+            <Link to="/tables">
                 <Button text={'Play as '+user.username} />
             </Link>
             :
             <>
-            <Link to="/login">
-                <Button text='Log in' />
-            </Link>
-            <Link to="/register">
-                <Button text='Register' />
-            </Link>
+                <Link to="/login">
+                    <Button text='Log in' />
+                </Link>
+                <Link to="/register">
+                    <Button text='Register' />
+                </Link>
             </>
-                }
+            }   
         </main>
     )
 }

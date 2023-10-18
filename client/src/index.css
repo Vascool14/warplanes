@@ -22,7 +22,7 @@
   --gray: #8888;
   --radius: 1rem;
   --padding: 1.5rem;
-  --sidePadding: 10vw;
+  --sidePadding: 8vw;
 
   color: var(--text);
   background-color: var(--bg);
