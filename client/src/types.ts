@@ -4,13 +4,18 @@ export type StateType = {
     menuOpen: boolean;
     theme: 'light' | 'dark';
     sounds: { music: boolean, sfx: boolean };
-    airplanes: AirplaneType[];
+    airplanes: PlaneType[];
     toast: {message: string; success: boolean; }
 }
 
-export type AirplaneType = {
-    enemy: boolean;
-    position: { square: number, rotation: 'up'|'right'|'down'|'left' };
+export type TileType = {
+    position: number,
+    head: boolean,
+    body: boolean
+}
+export type PlaneType = {
+    head: number,
+    rotation: 'up'|'right'|'down'|'left';
 }
 
 export type ContextType = {

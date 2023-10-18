@@ -58,28 +58,28 @@ export default function Tables(){
                     color: var(--bg);
                     width: 20rem;
                     max-width: 100%;
-                    border-radius: calc(var(--radius) + 0.5rem);
+                    border-radius: calc(var(--radius) + 0.4rem);
                     position: relative;
-                    padding: 0.5rem;
+                    padding: 0.6rem;
                     display: flex;
                     flex-direction: column;
                     justify-content: space-between;
                     gap: 0.5rem;
                 }`}</style>
                 <div className="table">
-                    <h3 className="pl-1">🤖 BOT Ioana 🤷🏼‍♀️</h3>
-                    <p className="pl-2 mt-[-0.5rem]">difficulty: easy</p>
+                    <h3>🤖 BOT Ioana 🤷🏼‍♀️</h3>
+                    <p className="pl-1 mt-[-0.5rem]">difficulty: easy</p>
                     <Button text={'join'} onButtonClick={() => navigate('/tables/bot-ioana')}/>
                 </div>
                 <div className="table">
-                    <h3 className="pl-1">🤖 BOT Vasile 🙋🏽‍♂️</h3>
-                    <p className="pl-2 mt-[-0.5rem]">difficulty: hard</p>
+                    <h3>🤖 BOT Vasile 🙋🏽‍♂️</h3>
+                    <p className="pl-1 mt-[-0.5rem]">difficulty: hard</p>
                     <Button text={'join'} onButtonClick={() => navigate('/tables/bot-vasile')}/>
                 </div>
                 {!loading && tables.map((table, i) => (
                     <div key={i} className="table">
-                        <h3 className="pl-2">{table.user}</h3>
-                        <p className="pl-2 mt-[-0.5rem]">table id: <span className="text-[var(--gray)]">{table.id}</span></p>
+                        <h3 className="pl-1">{table.user}</h3>
+                        <p className="pl-1 mt-[-0.5rem]">table id: <span className="text-[var(--gray)]">{table.id}</span></p>
                         <Button text={table.PIN?'🔒':'join'} onButtonClick={() => navigate(`/tables/id=${table.id}`)}/>
                     </div>
                 ))}

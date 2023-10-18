@@ -88,31 +88,35 @@ button:active .buttonTop {transform: translateY(0);}
     background: linear-gradient(transparent 0%, var(--sky) 45%, var(--sky) 55%, transparent 70%);
 }
 
-/* tile */
+/* board */
 .board{
     display: flex ;
     flex-wrap: wrap;
     aspect-ratio: 1/1;
+    gap: 2px;
 }
 .board .tile{
-    width: 10%;
-    height: 10%;
-    background: var(--gray);
-    border: 1px solid var(--sky);
+    width: calc(10% - 2px);
+    height: calc(10% - 2px);
     border-radius: 0.2rem;
-    transition: all 0.s ease;
+    transition: all 0.05s ease;
 }
 .board .tile.enemy:hover{
-    border: 2px solid var(--gray);
+    filter: brightness(1.1);
 }
-.board .tile.enemy:active{
-    background: var(--sky);
-    border: none;
-}
+
 @media not all and (min-width: 640px){
-    .board{ width: 40vh; height: 100%; }
+    .board{ 
+        width: 40vh; 
+        height: 100%; 
+    }
+    .board .tile{
+        border-radius: 1px;
+    }
 }
 @media (min-width: 640px) {
-    .board {  width: 100%; max-width: 40rem; }
-    .board .tile { border-width: 2px; border-radius: 0.4rem;}
+    .board {  
+        width: 100%; 
+        max-width: 35rem; 
+    }
 }
