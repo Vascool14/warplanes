@@ -1,27 +1,9 @@
-# React + TypeScript + Vite
+# Jocul "Warplanes" este o adaptare a un joc popular din copilarie, jucat intre 2 adversari, pe hartie numit "Avioane".
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Reguli de joc:
+## Fiecare jucator are cate 2 “radare”. In primul, jucatorul isi poziţioneaza 3 avioane, iar in al doilea incearca sa loveasca avioanele adversarului. Cele 2 radare sunt 2 matrice 10x10.
 
-Currently, two official plugins are available:
+ <!-- este construit cu React si Node.js si permite jucatorilor sa joace impotriva unui bot inteligent sau in mod multiplayer cu ajutorul WebSockets. -->
+## Scopul jocului este sa distrugi avioanele inamice prin alegerea pozitiilor pe tabla de joc. Jocul este similar cu "Battleship", dar in loc de nave, jucatorii trebuie sa gaseasca si sa distruga avioanele inamice.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Jocul poate fi jucat in modul singleplayer sau multiplayer. In modul singleplayer, jucatorul joaca impotriva unui bot inteligent, iar in modul multiplayer, jucatorii se pot conecta prin WebSockets si pot juca unul impotriva celuilalt.
