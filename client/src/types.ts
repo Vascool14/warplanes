@@ -9,9 +9,9 @@ export type StateType = {
 }
 
 export type TileType = {
-    position: number,
     head: boolean,
-    body: boolean
+    body: boolean,
+    hit: boolean,
 }
 export type PlaneType = {
     head: number,

@@ -8,9 +8,20 @@
     "theme_color": "#032444",
     "icons": [
         {
-            "src": "/airplane.webp",
+            "src": "/logo-128x128.webp",
             "sizes": "128x128",
             "type": "image/webp"
+        },
+        {
+            "src": "/logo-512x512.webp",
+            "sizes": "512x512",
+            "type": "image/webp"
+        },
+        {
+            "src": "/pwa-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
         }
     ]
 }

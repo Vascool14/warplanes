@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react'
 
-const Toast = ({toast}:{toast:{message:string, success:boolean}}) => {
+const Toast = ({toast}: {toast: {message:string, success:boolean} }) => {
     const [show, setShow] = useState(false)
     useEffect(() => {
         if (toast.message.length>0) {
             setShow(true)
-            setTimeout(() => {
-                setShow(false)
-            }, 3000)
+            setTimeout(() => { setShow(false) }, 3000)
         }
     }, [toast])
     return (

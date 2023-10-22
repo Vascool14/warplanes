@@ -25,3 +25,6 @@ dist-ssr
 
 # mac
 .DS_Store
+
+#  to ignore pwa 'dev-dist' folder
+dev-dist/
