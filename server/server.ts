@@ -4,7 +4,6 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import { Server as SocketIoServer } from 'socket.io'; 
 import http from 'http';
-const gameRoute = require('./routes/gameRoute');
 dotenv.config();
 
 const app = express();
@@ -16,19 +15,17 @@ const io = new SocketIoServer(server, {
     },
 });
 
-
 //MIDDLEWARE >>>
 app.use(express.json()); //built-in function in Express, parses incoming requests with JSON payloads
-app.use(cors({
-    origin: ['http://localhost:5173','http://192.168.1.4:5173'], credentials: true  // allow cookies
-})); 
+app.use(cors({ origin: ['http://localhost:5173','http://192.168.1.4:5173'], credentials: true })); 
 app.use((req: any, res: any, next: any) => { 
     console.log(`new request: ${req.method} ${req.path}`);
     next();
 }); 
 
 //ROUTES >>>>
-app.use('/game', gameRoute);
+app.use('/', require('./routes/userRoutes'));
+app.use('/game', require('./routes/gameRoutes'));
 
 // Define Socket.io logic here
 io.on('connection', (socket: any) => {
@@ -52,3 +49,8 @@ mongoose.connect(process.env.MONGO_URL as string)
         server.listen(process.env.PORT, () => console.log(`Server started on port ${process.env.PORT}`));
     })
     .catch((err: any) => console.log(err));
+
+// API - Application Programming interface
+
+// REST API = Representational state transfer 
+// GET / POST / DELETE / PATCH / UPDATE

@@ -7,20 +7,18 @@ import axios from 'axios';
 export default function Login() {
     const { state, setState } = useContext(Context);
     const user = state.user;
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
     useEffect(() => {
-        if(!user){
-            const navigate = useNavigate();
-            navigate('/login');
-        }
+        if(!user){ navigate('/login'); }
     }, [])
     function handleSubmit() {
-        if(username.length < 3 || password.length < 3) return;
-        axios.post('/login', { username, password}).then(res => {
+        if(email.length < 3 || password.length < 3) return;
+        axios.post('/login', { email, password})
+        .then(res => {
             if(res.data.success){
                 setState({ ...state, user: res.data.user })
-                const navigate = useNavigate();
                 navigate('/account');
             }
         }).catch(err => {
@@ -33,11 +31,13 @@ export default function Login() {
             className='flex flex-col gap-6 max-w-[28rem]'>
                 <h1>Log In</h1>
                 <div className="input-group">
-                    <input type="text" name="first-name" />
-                    <label htmlFor="first-name">Username</label>
+                    <input type="text" id="email" name="email" autoComplete='email'
+                    value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <label htmlFor="email">Email</label>
                 </div>
                 <div className="input-group mb-2">
-                    <input type="password" name="password" />
+                    <input type="password" id="password" name="password" autoComplete='current-password'
+                    value={password} onChange={(e) => setPassword(e.target.value)} />
                     <label htmlFor="password">Password</label>
                 </div>
                 <Button text='Submit' onButtonClick={handleSubmit} />

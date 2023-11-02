@@ -14,7 +14,6 @@ export default function Menu() {
         <>
         <aside className="z-[100] overflow-hidden shadow-lg bg-[var(--bg)] translate-x-[100%] h-screen w-[min(70vw,25rem)] 
         fixed right-0 transition-all flex flex-col items-center gap-4 p-6">
-
             <style>
                 {`.container { width:62px;  height:37px; display: flex; align-items: center; justifiy-content:center; position:relative; }
                 .checkbox { opacity:1; width:0;  height:0;}
@@ -22,7 +21,7 @@ export default function Menu() {
                     background: var(--gray) !important; 
                     border-radius:1.2rem; cursor:pointer; transition: all 0.2s ease-out;}
                 .slider { width: 31px;  height: 31px; position: absolute;      
-                    left: 3px; top: 3px; border-radius:50%;  background-color:#fff;  
+                    left: 3px; top: 3px; border-radius:50%;  background-color:var(--white);  
                     box-shadow:0px 3px 8px #0003, 0px 3px 1px #0001; transition: all 0.2s ease-out;  cursor:pointer; }
                 .checkbox:checked + .switch { background:#4b4 !important; }
                 .checkbox:checked + .switch .slider { left:calc(50% - 3px); }

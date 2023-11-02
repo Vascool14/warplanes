@@ -5,40 +5,17 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function Tables(){
-    const {state, setState} = useContext<any>(Context);
+    const { state, setState } = useContext<any>(Context);
     const [ loading, setLoading ] = useState(true)
     const bots = [
         {name: 'ioana', difficulty: 'easy', emoji: '🤷🏼‍♀️'},
-        {name: 'andrei', difficulty: 'medium', emoji: '🙋🏻‍♂️'},
-        {name: 'vasile', difficulty: 'hard', emoji: '👨🏽‍🎓'}
+        {name: 'vasile', difficulty: 'hard', emoji: '🙋🏽‍♂️'}
     ]
     const [ tables, setTables ] = useState<{id: number; user: string; PIN?: string, details?: string}[]>([
         {id: 23, user: 'vascool'},
         {id: 87, user:'mariansex', PIN: '1234'},
         {id: 23, user: 'vascool'},
-        {id: 87, user:'mariansex', PIN: '1234'},
-        {id: 23, user: 'vascool'},
-        {id: 87, user:'mariansex', PIN: '1234'},
-        {id: 23, user: 'vascool'},
-        {id: 87, user:'mariansex', PIN: '1234'},
-        {id: 23, user: 'vascool'},
-        {id: 87, user:'mariansex', PIN: '1234'},
-        {id: 23, user: 'vascool'},
-        {id: 87, user:'mariansex', PIN: '1234'},
-        {id: 23, user: 'vascool'},
-        {id: 87, user:'mariansex', PIN: '1234'},
-        {id: 23, user: 'vascool'},
-        {id: 87, user:'mariansex', PIN: '1234'},
-        {id: 23, user: 'vascool'},
-        {id: 87, user:'mariansex', PIN: '1234'},
-        {id: 23, user: 'vascool'},
-        {id: 87, user:'mariansex', PIN: '1234'},
-        {id: 23, user: 'vascool'},
-        {id: 87, user:'mariansex', PIN: '1234'},
-        {id: 23, user: 'vascool'},
-        {id: 87, user:'mariansex', PIN: '1234'},
-        {id: 23, user: 'vascool'},
-        {id: 87, user:'mariansex', PIN: '1234'},
+        {id: 87, user:'mariansex', PIN: '1234'}
     ])
     function GetTables(){
         setLoading(true)
@@ -63,16 +40,13 @@ export default function Tables(){
     //         setState({...state, toast: {message: err.message, success: false}})
     //     });
     // }
-    function handleButtonClick(){
-        // setModalOpen(true)
-    }
     useEffect(() => {
         GetTables();
     }, [])
     const navigate = useNavigate();
     return(
         <main className="flex flex-col items-center gap-[var(--padding)] p-0">
-            <section className="max-w-[64rem] flex flex-col justify-center p-4 gap-4 overflow-scroll">
+            <section className="max-w-[min(84vw,64rem)] flex flex-col justify-center p-4 pt-6 gap-4">
                 <style>{`
                 .table{  
                     background: var(--text);
@@ -87,7 +61,7 @@ export default function Tables(){
                     justify-content: space-between;
                     gap: 0.5rem;
                 }`}</style>
-                <h2>Offline</h2>
+                <h2 className="text-center w-full">Offline</h2>
                 <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {bots.map((bot, i) => (
                         <div key={i} className="table">
@@ -97,12 +71,12 @@ export default function Tables(){
                         </div>
                     ))}
                 </div>
-                <div className="flex items-center gap-4">
-                    <h2>Online tables</h2>
-                    <div className={`w-9 h-9 mb-3 flex items-center justify-center cursor-pointer rounded-full ${loading && 'animate-spin'}`} 
+                <div className="flex items-center gap-4 justify-center">
+                    <h2>Online</h2>
+                    <div className={`w-8 h-8 mb-3 flex items-center justify-center cursor-pointer rounded-full ${loading && 'animate-spin'}`} 
                     onClick={() => GetTables()}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={4.5} stroke="currentColor"
-                        className="w-9 h-9"><path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" /></svg>
+                        className="w-8 h-8"><path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" /></svg>
                     </div>
                 </div>
                 <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

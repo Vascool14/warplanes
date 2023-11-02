@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const gameSchema = new mongoose.Schema({ 
-    code: {
+    tableId: {
         type: String,
         required: false
     },

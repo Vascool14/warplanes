@@ -23,10 +23,7 @@ axios.defaults.baseURL = 'http://localhost:8080/';
 export default function App() {
     const { state, setState } = useContext(Context);
     const navigate = useNavigate();
-    function playShortClick() {
-        const audio = new Audio(click);
-        audio.play();
-    }
+    const audio = new Audio(click);
     return (
     <div className='flex'>
         <section className="w-screen fixed inset-0 overflow-hidden bg-[var(--sky)] flex justify-center">
@@ -44,17 +41,17 @@ export default function App() {
         <div className={`transition-all w-screen h-screen duration-300 z-10 ${state.menuOpen && '-translate-x-[min(70vw,25rem)]'}`}>
             <Suspense fallback={null}>
                 <div style={{zIndex: 100}}>
-                    <div className="fixed left-0 top-0 ml-3 my-1 sm:ml-8 flex items-center justify-center cursor-pointer transition-all text-[4rem]"
-                    onClick={() => { navigate(-1); playShortClick()}}>
+                    <div className="fixed left-0 top-0 ml-5 my-1 sm:ml-8 flex items-center justify-center cursor-pointer transition-all text-[4rem]"
+                    onClick={() => { navigate(-1); audio.play()}}>
                         <div className="relative">
                             <span className='ml-3 absolute'>-</span>
                             <span className='absolute'>&lt;</span>
                         </div>
                     </div>
 
-                    <div className="fixed right-0 top-0 mr-3 my-1 sm:mr-8 flex items-center justify-center cursor-pointer 
+                    <div className="fixed right-0 top-0 mr-5 my-1 sm:mr-8 flex items-center justify-center cursor-pointer 
                     transition-all ml-auto text-[4rem]" style={{transform: state.menuOpen?'rotate(45deg)':'rotate(0)'}}
-                    onClick={() => {setState({...state, menuOpen: !state.menuOpen}); playShortClick()}}><span>+</span></div>
+                    onClick={() => {setState({...state, menuOpen: !state.menuOpen}); audio.play()}}><span>+</span></div>
 
                     <Toast toast={state.toast} />
                     <Menu />
@@ -68,7 +65,6 @@ export default function App() {
 
                     <Route path="/tables" element={<Tables />} />
                     <Route path="/tables/bot-ioana" element={<BotGame bot="ioana" />} />
-                    <Route path="/tables/bot-andrei" element={<BotGame bot="andrei" />} />
                     <Route path="/tables/bot-vasile" element={<BotGame bot="vasile" />} /> 
                     <Route path="/tables/:id" element={<Game />} />
                     <Route path="/tables/*" element={<main><h1>404 Not Found</h1></main>} />

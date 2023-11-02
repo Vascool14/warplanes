@@ -1,7 +1,7 @@
 import express from 'express';
 const gameModel = require('../models/gameModel');
 
-const router = express.Router();
+const router = express.Router(); 
 
 router.post('/create', async (req: any, res: any) => {
     try {
