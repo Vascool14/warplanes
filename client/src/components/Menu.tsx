@@ -10,9 +10,10 @@ export default function Menu() {
         localStorage.setItem( 'data-theme', newTheme );
         setState({...state, theme: newTheme});
     } 
+    const year = new Date().getFullYear();
     return (   
         <>
-        <aside className="z-[100] overflow-hidden shadow-lg bg-[var(--bg)] translate-x-[100%] h-screen w-[min(70vw,25rem)] 
+        <aside className="z-[100] overflow-hidden shadow-lg bg-[var(--bg)] translate-x-[100%] h-screen w-[min(70vw,28rem)] rounded-l-[1.5rem]
         fixed right-0 transition-all flex flex-col items-center gap-4 p-6">
             <style>
                 {`.container { width:62px;  height:37px; display: flex; align-items: center; justifiy-content:center; position:relative; }
@@ -27,8 +28,9 @@ export default function Menu() {
                 .checkbox:checked + .switch .slider { left:calc(50% - 3px); }
                 `}
             </style>
+            <h2>Settings</h2>
             <section className='flex w-full items-center justify-between'>
-                <h2>Theme</h2>
+                <h3>Theme</h3>
                 <div className="container">
                     <input type="checkbox" checked={state.theme!=="light"} className="checkbox" id="checkbox1" 
                     onChange={() => toggleTheme()} />
@@ -36,7 +38,7 @@ export default function Menu() {
                 </div>
             </section>
             <section className='flex w-full items-center justify-between'>
-                <h2>Music</h2>
+                <h3>Music</h3>
                 <div className="container">
                     <input type="checkbox" checked={state.sounds.music==true} className="checkbox" id="checkbox2" 
                     onChange={() => setState({...state, sounds: {...state.sounds, music: !state.sounds.music}})} />
@@ -44,16 +46,16 @@ export default function Menu() {
                 </div>
             </section>
             <section className='mb-auto flex w-full items-center justify-between'>
-                <h2>Sounds</h2>
+                <h3>Sounds</h3>
                 <div className="container">
                     <input type="checkbox" checked={state.sounds.sfx==true} className="checkbox" id="checkbox3" 
                     onChange={() => setState({...state, sounds: {...state.sounds, sfx: !state.sounds.sfx}})} />
                     <label className="switch" htmlFor="checkbox3"><span className="slider"></span></label>
                 </div>
             </section>
-            <p>Warplanes<span className="font-[900] px-[1px]">©</span>2026</p>
+            <p>Warplanes<span className="font-[900] text-[30px] px-[1px]">©</span>{year}</p>
         </aside>
-        {state.menuOpen && <div onClick={() => setState({...state, menuOpen: false})} className="fixed inset-0 bg-[#1112] z-[99]"></div>}
+        {state.menuOpen && <div onClick={() => setState({...state, menuOpen: false})} className="fixed w-[103vw] h-screen left-0 bg-[#1112] z-[99]"></div>}
         </>
     )
 }

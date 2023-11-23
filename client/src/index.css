@@ -9,7 +9,6 @@
   font-weight: 400;
   src: local('Gamer Station'), url('https://fonts.cdnfonts.com/s/94711/Gamer Station.woff') format('woff');
 }
-
 :root {
   font-family: 'Gamer Station', sanf-serif;
   line-height: 1.5;
@@ -19,13 +18,27 @@
   --bg: #242424;
   --text: #f5f5f5;
   --sky: #06192d;
-  --gray: #8888;
+  --gray: #888;
   --white: #f6f6f6;
-  --radius: 1rem;
+  --black: #111;
+  --radius: 0.8rem;
   --padding: 1.5rem;
   --sidePadding: 8vw;
 
-  color: var(--text);
+  --yellowLight:rgb(243, 193, 85);
+  --yellow:     rgb(234, 172, 50);
+  --yellowDark: rgb(215,115,26);
+  --greenLight:rgb(91, 225, 73);
+  --green:     rgb(72, 203, 49);
+  --greenDark: rgb(50, 170, 35);
+  --blueLight:rgb(96,180,255);
+  --blue:     rgb(64,156,240);
+  --blueDark: rgb(30,120,215);
+  --redLight:rgb(215,52,54);
+  --red:     rgb(197,37,37);
+  --redDark: rgb(155,33,31);
+
+  color: var(--white);
   background-color: var(--bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -50,21 +63,6 @@ body, html, #root{
   padding: 0;
   background-color: var(--sky);
 }
-
-*, *::before, *::after {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-}
-h1 { font-size: calc(3rem + 1vw); }
-h2{ font-size: calc(2rem + 1vw); }
-h3{ font-size: calc(1.5rem + 0.5vw); }
-p{ font-size: calc(1rem + 0.5vw); }
-h1, h2, h3, p { margin: 0 }
-a {
-  color: inherit;
-  text-decoration: underline;
-}
-
 main{
   width: 100vw;
   width: 100dvw;
@@ -73,6 +71,22 @@ main{
   padding: var(--padding);
   z-index: 10;
 }
+*, *::before, *::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+h1 { font-size: calc(3rem + 1vw); }
+h2{ font-size: calc(2rem + 1vw); }
+h3{ font-size: calc(1.5rem + 0.8vw); }
+p{ font-size: calc(1rem + 0.5vw); }
+h1, h2, h3, p { 
+  margin: 0;  text-decoration: none;
+  color: var(--white);
+  text-shadow: 0px 2px 2px var(--black),0px 2px 2px var(--black),0px 2px 2px var(--black),0px 2px 2px var(--black),0px 2px 2px var(--black),
+  0px 0px 1px var(--black),0px 0px 1px var(--black),0px 0px 1px var(--black),0px 0px 1px var(--black);
+}
+
 @media (min-width: 768px) {
   :root{
     --padding: 2rem;

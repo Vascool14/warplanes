@@ -11,7 +11,7 @@ export default function Home() {
         <main className='flex items-center justify-center flex-col gap-5 pb-[3rem]'>
             <h1 className='mt-auto text-center'>Warplanes ✈️</h1>  
             <Link to="/tables" className='mt-auto'>
-                <Button text='Play as guest' />
+                <Button text='Play as guest' color='green' />
             </Link>
             {user?.username ? 
             <Link to="/tables">

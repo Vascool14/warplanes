@@ -8,16 +8,6 @@ export type StateType = {
     toast: {message: string; success: boolean; }
 }
 
-export type TileType = {
-    head: boolean,
-    body: boolean,
-    hit: boolean,
-}
-export type PlaneType = {
-    head: number,
-    rotation: 'up'|'right'|'down'|'left';
-}
-
 export type ContextType = {
     state: StateType;
     setState: React.Dispatch<React.SetStateAction<StateType>>;
@@ -30,3 +20,17 @@ export type UserType = {
     wins: number;
     losses: number;
 }
+
+// game types
+export type TileType = {
+    head: boolean,
+    body: boolean,
+    hit: boolean,
+}
+
+export type PlaneType = {
+    headIndex: number,
+    rotation:  RotationType,
+}
+
+export type RotationType = 'up' | 'down' | 'right' | 'left';
