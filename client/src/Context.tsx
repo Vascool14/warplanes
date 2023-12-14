@@ -6,22 +6,17 @@ export const Context = createContext<ContextType>({}) as React.Context<ContextTy
 export const Provider = (props: any) => {
     const [ state, setState ] = useState<StateType>({
         user: {
-            // username: 'Vascool',
-            // email: 'andreivascul2004@gmail.com',
-            // id: '31ujr013iohfqcp09q',
-            // wins: 69,
-            // losses: 13,
             username: '',
             email: '',
-            id: '',
-            wins: 0,
-            losses: 0,
+            // id: '',
+            gameStats:{ wins: 0, losses: 0, gold: 0 }
         },
         menuOpen: false,
         theme: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light',
-        sounds: { music: true, sfx: true},
-        airplanes: [],
-        toast: {message: '', success: false}
+        sounds: true,
+        music: false,
+        musicType: 'menu',
+        canExit: true,
     });
     return (
     <Context.Provider value={{state, setState}}>

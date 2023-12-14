@@ -12,6 +12,8 @@ router.post('/register', async (req, res) => {
         const { username, mail, password } = req.body;
         
         let user = await userModel.findOne({ mail }); // Check if the mail is already in use
+        if(user) console.log('line 15', user);
+        
         if (user) return res.status(400).json({ error:'Email already in use' });
 
         // Create the new user
@@ -30,7 +32,7 @@ router.post('/register', async (req, res) => {
 
         if (!process.env.JWT_SECRET) return res.status(500).json({ error: 'JWT secret is not defined' });
         const token = jwt.sign(payload, process.env.JWT_SECRET );
-        res.status(200).json({token});    
+        res.status(200).json({token, foundUser});
     }catch(err){
         // ERROR Handling
         console.error(err);
@@ -55,20 +57,14 @@ router.post('/login', async (req, res) => {
         if (!process.env.JWT_SECRET) return res.status(500).json({ error: 'JWT secret is not defined' });
         const token = jwt.sign(payload, process.env.JWT_SECRET );
     
-        res.status(200).json({token}); // SUCCESS
+        res.status(200).json({token, user});
         }catch(err){
             console.error(err);
             res.status(500).json({ error: 'Server error' });
         }
 });
 
-// Log out a user 
-router.post('/logout', (req, res) => {
-    res.cookie('token', '', { maxAge: 0 }); // Clear the cookie
-    res.status(200).json();
-}); 
-
-// Get the currently logged in user from the JWT
+// Get the currently logged in user from the document.cookie
 router.get('/me', async (req, res) => { 
     try {
         const authHeader = req.headers.authorization;
@@ -77,13 +73,12 @@ router.get('/me', async (req, res) => {
         // Verify the JWT and extract the user's ID
         if (!token) return res.status(401).json({ error: 'Unauthorized' });
         if (!process.env.JWT_SECRET) return res.status(500).json({ error: 'JWT secret is not defined' });
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-        const userId = decodedToken.userId;
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET) as { userId: string };
     
         // Find the user in the database
-        const user = await userModel.findById(userId).select('-password'); // Exclude the password
-        if (!user) return res.status(401).json({ error: 'Unauthorized' });
-    
+        const user = await userModel.findById(decodedToken.userId);
+        if (!user) return res.status(404).json({ error: 'User not found' });
+
         res.status(200).json(user);
     } catch (err) {
         console.error(err);
@@ -91,4 +86,4 @@ router.get('/me', async (req, res) => {
     }
 });
 
-module.exports = router; 
+module.exports = router;

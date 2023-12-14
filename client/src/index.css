@@ -26,14 +26,14 @@
   --sidePadding: 8vw;
 
   --yellowLight:rgb(243, 193, 85);
-  --yellow:     rgb(234, 172, 50);
+  --yellow:     rgb(234, 173, 52);
   --yellowDark: rgb(215,115,26);
   --greenLight:rgb(91, 225, 73);
   --green:     rgb(72, 203, 49);
   --greenDark: rgb(50, 170, 35);
   --blueLight:rgb(96,180,255);
-  --blue:     rgb(64,156,240);
-  --blueDark: rgb(30,120,215);
+  --blue:     #409cf0;
+  --blueDark: #1e78d7;
   --redLight:rgb(215,52,54);
   --red:     rgb(197,37,37);
   --redDark: rgb(155,33,31);
@@ -64,42 +64,37 @@ body, html, #root{
   background-color: var(--sky);
 }
 main{
-  width: 100vw;
-  width: 100dvw;
-  min-height: 100vh;
-  min-height: 100dvh;
+  width: 100vw; width: 100dvw;
+  height: 100vh; height: 100dvh;
   padding: var(--padding);
-  z-index: 10;
+  /* page transition -> */
+  animation-fill-mode: both; transform-origin:bottom center; animation-duration: 0.3s; animation-timing-function: ease-in-out;
 }
+main.swipe-up{ animation-name: swipeUp; }
+@keyframes swipeUp{ 0%{transform:translate3d(0,-1000px,0); opacity:0;} 100%{transform:translate3d(0,0,0); opacity:1;}}
+/* <- page transitions */
+
 *, *::before, *::after {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
 }
-h1 { font-size: calc(3rem + 1vw); }
-h2{ font-size: calc(2rem + 1vw); }
+h1 { font-size: calc(2.5rem + 1.1vw); }
+h2{ font-size: calc(1.8rem + 1vw); }
 h3{ font-size: calc(1.5rem + 0.8vw); }
-p{ font-size: calc(1rem + 0.5vw); }
+p, a{ font-size: calc(1rem + 0.5vw); }
 h1, h2, h3, p { 
   margin: 0;  text-decoration: none;
   color: var(--white);
-  text-shadow: 0px 2px 2px var(--black),0px 2px 2px var(--black),0px 2px 2px var(--black),0px 2px 2px var(--black),0px 2px 2px var(--black),
+  text-shadow: 0px 2px 1px var(--black),0px 2px 1px var(--black),0px 2px 1px var(--black),0px 2px 1px var(--black),0px 2px 1px var(--black), 0px 2px 1px var(--black),0px 2px 1px var(--black), 
   0px 0px 1px var(--black),0px 0px 1px var(--black),0px 0px 1px var(--black),0px 0px 1px var(--black);
 }
-
-@media (min-width: 768px) {
-  :root{
-    --padding: 2rem;
-  }
-  main{
-    padding: var(--padding) var(--sidePadding);
-  }
+h4{
+  font-size: calc(1rem + 0.2vw);
+  margin: 0;  text-decoration: none;
+  color: var(--white);
 }
-
-.svgContainer{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: all 0.2s;
+@media (min-width: 768px) {
+  :root{  --padding: 2rem; }
+  main{ padding: var(--padding) var(--sidePadding); }
 }

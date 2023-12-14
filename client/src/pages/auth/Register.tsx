@@ -12,14 +12,19 @@ export default function Register() {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
     useEffect(() => {
-        if(!user){ navigate('/login'); }
+        if(state.user?.email !== ''){
+            navigate('/account');
+        }
+        setState({...state, canExit: true})
+        return () => { setState({...state, canExit: false}) }
     }, [])
     function handleSubmit() {
         if(email.length < 3 || password.length < 3) return;
-        axios.post('/login', { username, email, password})
+        axios.post('/register', { username, email, password})
         .then(res => {
             if(res.data.success){
-                setState({ ...state, user:res.data.user })
+                setState({ ...state, user: { username: res.data.user.username, email: email, id: res.data.user._id, gameStats: res.data.user.gameStats }})
+                document.cookie = `token=${res.data.token}; path=/; max-age=2592000`; // 30 days
                 navigate('/account');
             }
         }).catch(err => {
@@ -41,7 +46,7 @@ export default function Register() {
                     value={email} onChange={(e) => setEmail(e.target.value)}/>
                     <label htmlFor="email">Email</label>
                 </div>
-                <div className="input-group mb-2">
+                <div className="input-group">
                     <input type="password" id="paddword" name="password" 
                     value={password} onChange={(e) => setPassword(e.target.value)}/>
                     <label htmlFor="password">Password</label>

@@ -2,9 +2,8 @@ import Button from "../components/Button";
 import { useState, useContext, useEffect } from "react";
 import { Context } from "../Context";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import '../App.css'
-import rhombus from '/src/components.rhombus.svg'
 
 export default function Tables(){
     const { state, setState } = useContext<any>(Context);
@@ -15,10 +14,9 @@ export default function Tables(){
         {name: 'vasile', difficulty: 'hard', emoji: '👨🏽‍🎓'}
     ]
     const [ tables, setTables ] = useState<{id: number; user: string; PIN?: string, details?: string}[]>([
-        {id: 23, user: 'vascool'},
-        {id: 87, user:'marian', PIN: '1234'},
-        {id: 23, user: 'vascool'},
-        {id: 87, user:'mariansex', PIN: '1234'}
+        {id: 12, user: 'vascool'},
+        {id: 87, user:'wirsfubanepd', PIN: '1234'},
+        {id: 23, user: 'vascool12', PIN: '0000'},
     ])
     function GetTables(){
         setLoading(true)
@@ -30,7 +28,7 @@ export default function Tables(){
         //     setState({...state, toast: {message: err.message, success: false}})
         //     setTables([])
         // });
-        setTimeout(() => {  setLoading(false)}, 1000);
+        setTimeout(() => {  setLoading(false)}, 500);
     }
     // function JoinTable(name: string){
     //     const table = tables.find(table => table.name == name)
@@ -46,17 +44,17 @@ export default function Tables(){
     // }
     useEffect(() => {
         GetTables();
+        setState({...state, canExit: true, musicType: 'menu'})
     }, [])
-    const navigate = useNavigate();
     return(
-        <main className="flex flex-col items-center gap-[var(--padding)] p-0">
-            <section className="max-w-[min(80vw,76rem)] flex flex-col justify-center p-4 pt-6 gap-4">
+        <main className="swipe-up flex flex-col items-center gap-[var(--padding)] p-0 pt-12 md:pt-20 overflow-y-scroll">
+            <section className="max-w-[min(80vw,76rem)] flex flex-col justify-center p-4 pt-2 sm:pt-6 gap-4">
                 <h1 className="text-center w-full">Offline</h1>
                 <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     <style>{`
                     .table{  
                         background: var(--bg);
-                        width: max(20rem, 50vw);
+                        width: max(18rem, 50vw);
                         max-width: 100%;
                         border-radius: calc(var(--radius) + 0.4rem);
                         position: relative;
@@ -69,9 +67,11 @@ export default function Tables(){
                     `}</style>
                     {bots.map((bot, i) => (
                         <div key={i} className="table">
-                            <h3>{bot.name} {bot.emoji}</h3>
-                            <p className="pl-1 mt-[-0.5rem]">difficulty: {bot.difficulty}</p>
-                            <Button text={'join'} onButtonClick={() => navigate(`/tables/bot-${bot.name}`)}/>
+                            <h3 className="pl-2">{bot.name} {bot.emoji}</h3>
+                            <p className="pl-2 mt-[-0.5rem]">difficulty: {bot.difficulty}</p>
+                            <Link to={`/tables/bot-${bot.name}`}>
+                                <Button text={'join'} color="yellow" sound="attack" />
+                            </Link>
                         </div>
                     ))}
                 </div>
@@ -80,22 +80,17 @@ export default function Tables(){
                     <Button text="↻" icon color="green" onButtonClick={() => GetTables()} />
                 </div>
                 <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {!loading ? (tables.length > 0 ? tables.map((table, i) => (
+                    {!loading && (tables.length > 0 ? tables.map((table, i) => (
                         <div key={i} className="table">
                             <h3 className="pl-1">{table.user}</h3>
                             <p className="pl-1 mt-[-0.5rem]">table id: <span className="text-[var(--gray)]">{table.id}</span></p>
-                            <Button text={table.PIN?'🔒':'join'} onButtonClick={() => navigate(`/tables/id=${table.id}`)}/>
+                            <Link to={`/tables/id=${table.id}`}>
+                                <Button text={table.PIN?'🔒':'join'} color="green" sound="attack" />
+                            </Link>
                         </div>
                     )):
                         <h3 className="text-center col-span-full">No open tables found</h3>
-                    ):
-                    [...Array(3)].map((_, i) => (
-                        <div key={i} className="table opacity-[0.8]">
-                            <h3 className="w-[min(9rem,50%)] mx-2 my-3 h-[1.6rem] bg-[var(--gray)] rounded"></h3>
-                            <div className="w-[6rem] m-2 mb-3 h-[1.2rem] bg-[var(--gray)] rounded"></div>
-                            <Button text="Loading..." />
-                        </div>
-                    ))}
+                    )}
                 </div>
             </section>
         </main>

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const userSchema = new mongoose.Schema({ 
+export default mongoose.model('userModel',  new mongoose.Schema({ 
     username: {
         type: String,
         required: true
@@ -13,10 +13,23 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    wins: {
-        type: Number,
-        required: false
+    gameStats: {
+        type: Object,
+        gold: {
+            type: Number,
+            required: true,
+            default: 1000
+        },
+        wins: {
+            type: Number,
+            required: true,
+            default: 0
+        },
+        losses: {
+            type: Number,
+            required: true,
+            default: 0
+        }
     }
-});  // Disable the version key
-
-export default mongoose.model('userModel', userSchema);
+})
+)

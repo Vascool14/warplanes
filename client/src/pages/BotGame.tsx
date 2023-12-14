@@ -1,44 +1,67 @@
-import { TileType, PlaneType } from "../types"
-import { useEffect, useState } from "react"
+import { TileType } from "../types"
+import { useEffect, useState, useContext } from "react"
+import { Context } from "../Context"
 import VanillaTilt from 'vanilla-tilt'
 import isMobile from "is-mobile"
 import { COLORS } from "../utils/Constants"
-import { turnValidValuesToBoard, generateValidRandomBoard, getRandomValidHeadIndex } from "../utils/Board"
-import YouWin from "../components/YouWin"
+import { generateRandomBoard, getRandomValidHeadIndex } from "../utils/Board"
 import PlaySound from "../sounds/PlaySound"
+// import Button from "../components/Button"
 
 export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
-    const [ myTurn , setMyTurn ] = useState(true)
-    const [ myBoard, setMyBoard ] = useState(generateValidRandomBoard())
+    const { state, setState } = useContext(Context)
+    const { user } = state
+    const [ isPaused , setIsPaused ] = useState(false)
+    const [ myTurn , setMyTurn ] = useState(isGameSaved()?getMyLocalTurn():Math.random() > 0.5)
+    const [ myBoard, setMyBoard ] = useState(isGameSaved()?getMyLocalBoard():generateRandomBoard(true))
     const [ botSelectedTile , setBotSelectedTile ] = useState(100)
     const [ winner , setWinner ] = useState('')
     const [ isTransparent , setIsTransparent ] = useState(false)
-    // const [ botPastHit , setBotPastHit ] = useState<boolean>(false)
-    const [ enemyBoard, setEnemyBoard ] = useState(generateValidRandomBoard())
+    const [ enemyBoard, setEnemyBoard ] = useState(isGameSaved()?getEnemyLocalBoard():generateRandomBoard())
     const [ timer , setTimer ] = useState(10)
     useEffect(() => {
+        setTimeout(() => { setState({...state, musicType: 'arena-jingle'})}, 700);
+        setTimeout(() => { 
+            setState({...state, canExit: true, musicType: 'battle'}); 
+            if(!myTurn) handleBotTurn()
+        }, 4000);
+        
         const interval = setInterval(() => {
-            if(timer > 0) setTimer(prev => prev - 1)
+            if(timer > 0 && !isPaused) setTimer(prev => prev - 1)
         }, 1000);
-        return () => clearInterval(interval)
+        return () => {
+            clearInterval(interval) 
+            resetLocalStorage()
+        }
     }, [])
     useEffect(() => {
         if(timer <= 0){
-            setMyTurn(false)
-            handleBotTurn()
+            if(myTurn){setMyTurn(false);handleBotTurn()}
+            else setMyTurn(true);
         }
     }, [timer])
+
     const mobile = isMobile()
     
+    const myBoardRef = document.querySelectorAll('.board')[0]
+    const enemyBoardRef = document.querySelectorAll('.board')[1]
     // game logic
     function handleTileClick(tile: TileType, i:number){
         setTimer(10)
         if(!myTurn) return
-        PlaySound('bubble')
         if(tile.hit) return
         setMyTurn(false)
         const newBoard = [...enemyBoard]
         newBoard[i].hit = true
+        if(newBoard[i].body){
+            enemyBoardRef.style.transform = 'scale(0.95)'
+            setTimeout(() => { enemyBoardRef.style.transform = 'scale(1)' }, 200)
+        }
+        if(state.sounds){
+            if(newBoard[i].head) PlaySound('head'+Math.floor(Math.random()*2+1))
+            else if(newBoard[i].body) PlaySound('hit'+Math.floor(Math.random()*2+1))
+            else PlaySound('miss')
+        } 
         setEnemyBoard(newBoard)
         if(checkIfWon(newBoard)){ 
             setIsTransparent(true)
@@ -56,7 +79,6 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
     }
     function handleBotTurn(){
         setTimer(10)
-        PlaySound('bubble')
         const newBoard = [...myBoard]
         const randomTile = getRandomValidHeadIndex(newBoard)
         if(randomTile%7 == 0) setBotSelectedTile(getRandomValidHeadIndex(newBoard))
@@ -64,7 +86,17 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
         setTimeout(() => { setBotSelectedTile(randomTile)}, 1500)
         setTimeout(() => {  
             newBoard[randomTile].hit = true
+            if(newBoard[randomTile].body){
+                myBoardRef.style.transform = 'scale(0.95)'
+                setTimeout(() => { myBoardRef.style.transform = 'scale(1)' }, 200)
+            }
+            if(state.sounds){
+                if(newBoard[randomTile].head) PlaySound('head'+Math.floor(Math.random()*3+1))
+                else if(newBoard[randomTile].body) PlaySound('hit'+Math.floor(Math.random()*2+1))
+                else PlaySound('miss')
+            } 
             setMyBoard(newBoard)
+            setBotSelectedTile(100)
             setTimeout(() => { setMyTurn(true); setTimer(10) }, 1000)
             if(checkIfWon(newBoard)) {
                 setIsTransparent(true)
@@ -78,7 +110,6 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
                 }, 500);
                 return () => clearTimeout(winTimeout)
             }
-            setBotSelectedTile(100)
         }, 1500 + 2500*Math.random())
     }
     function checkIfWon(board: TileType[]){
@@ -86,64 +117,109 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
         board.map(tile => { if(tile.hit && tile.head) hitHeads++ })
         return hitHeads === 3
     }
-    // TODO: reset game
     function resetGame(){
-        setMyBoard(generateValidRandomBoard())
-        setEnemyBoard(generateValidRandomBoard())
+        setMyBoard(generateRandomBoard())
+        setEnemyBoard(generateRandomBoard())
         setMyTurn(true)
         setWinner('')
         setIsTransparent(false)
+        resetLocalStorage()
+    }
+
+
+    // save the 2 boards and the turn in localStorage to persist on refresh
+    window.onbeforeunload = () => { 
+        localStorage.setItem('myBoard', JSON.stringify(myBoard))
+        localStorage.setItem('enemyBoard', JSON.stringify(enemyBoard))
+        localStorage.setItem('myTurn', JSON.stringify(myTurn))
+    }
+    function isGameSaved(){if(localStorage.getItem('myBoard')) return true;}
+    function getMyLocalBoard(){return JSON.parse(localStorage.getItem('myBoard')||'')}
+    function getEnemyLocalBoard(){return JSON.parse(localStorage.getItem('enemyBoard')||'')}
+    function getMyLocalTurn(){return JSON.parse(localStorage.getItem('myTurn')||'')}
+    function resetLocalStorage(){
+        localStorage.removeItem('myBoard')
+        localStorage.removeItem('enemyBoard')
+        localStorage.removeItem('myTurn')
     }
     if(!mobile){
         const boardsWrapper = document.getElementById('boardWrapper')
         // @ts-ignore
         VanillaTilt.init(boardsWrapper, { max:5, speed:400  });
     }
-    const user = {
-        name: 'ihgfedcbaVascool14',
-        email: 'vascul2002@gmail.com',
-        color: null
-    }
-    const userColor = user.color || COLORS[user.name.charCodeAt(0)%COLORS.length]
+    const userColor = user && user.username? COLORS[user.username.charCodeAt(0)%COLORS.length]: COLORS[0]
     return (
-        <main className="flex flex-col gap-2 sm:gap-8 items-center justify-center max-sm:justify-between h-screen overflow-hidden">
-            <section className="boardNav flex justify-center w-full h-[calc(2rem+4vw)] gap-4 sm:gap-8 min-h-[4.8rem]">
-                <div className="h-full w-[50%] flex gap-6 overflow-hidden">
-                    <h3 className="max-md:hidden overflow-clip mt-auto ml-auto mb-[-0.4rem] text-[var(--white)]">{user?.name || 'Guest'}</h3>
-                    <div className="iconWrapper max-md:ml-auto">
-                        <svg id="timerBar" style={{background: myTurn?'var(--white)':"var(--gray)"}} width="100%" height="100%" viewBox="0 0 40 40">
+        <main className={`swipe-up flex flex-col gap-2 ${!mobile && 'sm:gap-8'} items-center justify-center h-screen overflow-hidden pt-0`}>
+            {/* <section className="w-screen fixed inset-0 overflow-hidden bg-[var(--sky)] flex justify-center">
+                {state.theme === 'dark' ? 
+                <div className="stars">
+                    <div id="star1"></div>
+                    <div id="star2"></div>
+                    <div id="star3"></div>
+                </div>
+                :<div id="cloud">
+                    <svg width="0"><filter id="filter"><feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="10" /><feDisplacementMap in="SourceGraphic" scale="240"/></filter></svg>
+                </div>
+                }
+            </section> */}
+            {/* <div className="fixed top-24 right-6 cursor-pointer"> */}
+                {/* <Button icon text={isPaused?'=':'|>'} onButtonClick={() => setIsPaused(prev => !prev)} /> */}
+            {/* </div> */}
+            <section className={`boardNav flex justify-center w-full h-[calc(2rem+4vw)] gap-6 ${!mobile && 'sm:gap-8'} min-h-[4.8rem] ${mobile ? 'scale-[0.7]':'mt-2'}`}>
+                <div className="h-full w-[50%] flex gap-4">
+                    <h3 className="max-md:hidden overflow-clip text-[var(--white)] ml-auto mb-[-0.4rem] mt-auto">{user?.username || 'Guest'}</h3>
+                    <div className="iconWrapper max-md:ml-auto relative">
+                        <svg id="timerBar" style={{background: myTurn?'var(--white)':"var(--gray)",
+                        // animationPlayState: isPaused?'paused':'running'    
+                        }} width="100%" height="100%" viewBox="0 0 40 40">
                             {myTurn && <rect x="2" y="2" width="36" height="36" rx={8} ry={8} />}
                         </svg>
-                        <div className="icon " style={{backgroundColor: userColor+'aa'}}><h2>{user.name[0]}</h2></div>
+                        <div className="icon" style={{backgroundColor: userColor}}><h2>{user && user.username? user.username[0]:'g'}</h2></div>
                     </div>
                 </div>
 
                 <div className="h-full w-[50%] flex gap-6">
                     <div className="iconWrapper">
-                        <svg id="timerBar" style={{background: myTurn?'var(--gray)':"#ccc"}} width="100%" height="100%" viewBox="0 0 40 40">
+                        <svg id="timerBar" style={{background: !myTurn?'var(--white)':'var(--gray)'}} width="100%" height="100%" viewBox="0 0 40 40">
                             {!myTurn && <rect x="2" y="2" width="36" height="36" rx={8} ry={8} />}
                         </svg>
-                        <div className="icon" style={{backgroundColor: 'var(--white)'}}><h2>{bot == 'ioana'?"🤷🏼‍♀️":bot=='vasile'?'👨🏽‍🎓':"🙋🏻‍♂️"}</h2> </div>
+                        <div className="icon" style={{backgroundColor: '#c67'}}><h2>{bot == 'ioana'?"🤷🏼‍♀️":bot=='vasile'?'👨🏽‍🎓':"🙋🏻‍♂️"}</h2> </div>
                     </div>
                     <h3 className="max-md:hidden mt-auto mb-[-0.4rem] text-[var(--white)]">{bot}</h3>
                 </div>
             </section>
-            <div className="w-full flex max-sm:flex-col items-center justify-center gap-6 sm:gap-8" id="boardWrapper">
+
+            {/* start icons */} 
+            <section className="showdown">
+                <div className="left p-12 h-full flex w-full">
+                    <div className="icon">
+                        <h1>{user && user.username? user.username[0]:'g'}</h1>
+                    </div>
+                    <h1 className="text-[var(--white)]">{user?.username || 'guest'}</h1>
+                </div>
+                <div className="right p-12 h-full flex w-full items-end justify-end">
+                    <div className="icon">
+                        <h1>{bot == 'ioana'?"🤷🏼‍♀️":bot=='vasile'?'👨🏽‍🎓':"🙋🏻‍♂️"}</h1>
+                    </div>
+                    <h1 className="text-[var(--white)]">{bot}</h1>
+                </div>
+            </section>
+
+            <section className={`w-full flex max-sm:flex-col max-sm:mb-auto items-center justify-center gap-6 ${!mobile && 'sm:gap-8'}`} id="boardWrapper">
                 <section className="board" style={{opacity: myTurn?0.4:1}}>
-                    {myBoard.map((tile, i) => ( 
+                    {myBoard.map((tile: TileType, i:number) => ( 
                         <div key={i} className="tile"
-                        style={{background: botSelectedTile===i?'#f33':!tile.body?userColor+'22':
+                        style={{background: botSelectedTile===i?'#c67':!tile.body?userColor+'22':
                         tile.body&&tile.hit&&!tile.head?userColor:tile.head?'#999':userColor+'aa',
                         transform: tile.hit && !tile.body?'scale(0.01)':'scale(1)'}}
                         >
                             {tile.hit && tile.body && <p>x</p>}
-                            {/* {i} */}
                         </div>
                     ))}
                 </section>
                 <section className="board" style={{opacity: myTurn?1:0.4}}>
-                    {enemyBoard.map((tile, i) => (
-                        <div key={i} className="tile cursor-pointer enemy" 
+                    {enemyBoard.map((tile: TileType, i:number) => (
+                        <div key={i+100} className="tile cursor-pointer enemy" 
                         style={{background: tile.head && isTransparent?'#999':tile.body && isTransparent?'#c67': tile.hit&&tile.head?'#999':tile.hit&&tile.body?'#c67':'#c677',
                         transform: tile.hit&&!tile.body?'scale(0.01)':'scale(1)'}}
                         onClick={() => handleTileClick(tile, i)}
@@ -152,8 +228,11 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
                         </div>
                         ))}
                 </section>
-            </div>
-            {winner.length > 0 && <YouWin text={winner} />}
+            </section>
+            {winner.length > 0 && 
+            <div className="win fixed inset-0 flex items-center justify-center pl-10 text-center">
+                <h1 style={{animation: 'win 0.5s forwards', zIndex: 100, fontSize: 'calc(3rem + 5vw)'}}>{winner}</h1>
+            </div>}
         </main>
     )
 }

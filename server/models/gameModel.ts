@@ -1,26 +1,31 @@
 import mongoose from 'mongoose';
 
-const gameSchema = new mongoose.Schema({ 
+export default mongoose.model('gameModel', new mongoose.Schema({ 
     tableId: {
         type: String,
         required: false
     },
     player1: {
-        type: String,
-        required: true
+        board: {
+            type: Array,
+            required: false
+        },
+        id: {
+            type: String,
+            required: true
+        }
     },
     player2: {
-        type: String,
-        required: true
-    },
-    player1Board: {
-        type: Array,
-        required: true
-    },
-    player2Board: {
-        type: Array,
-        required: true
-    },
-},{ versionKey: false });  // Disable the version key
-
-module.exports = mongoose.model('gameModel', gameSchema);
+        type: Object,
+        board: {
+            type: Array,
+            required: false
+        },
+        id: {
+            type: String,
+            required: true
+        },
+        required: false
+    }
+},{ versionKey: false })  // Disable the version key
+)

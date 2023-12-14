@@ -6,4 +6,4 @@
  <!-- este construit cu React si Node.js si permite jucatorilor sa joace impotriva unui bot inteligent sau in mod multiplayer cu ajutorul WebSockets. -->
 ## Scopul jocului este sa distrugi avioanele inamice prin alegerea pozitiilor pe tabla de joc. Jocul este similar cu "Battleship", dar in loc de nave, jucatorii trebuie sa gaseasca si sa distruga avioanele inamice.
 
-## Jocul poate fi jucat in modul singleplayer sau multiplayer. In modul singleplayer, jucatorul joaca impotriva unui bot inteligent, iar in modul multiplayer, jucatorii se pot conecta prin WebSockets si pot juca unul impotriva celuilalt.
+## Jocul poate fi jucat in modul singleplayer sau multiplayer. In modul singleplayer, jucatorul joaca impotriva unui bot inteligent care are 3 niveluri de dificultate, iar in modul multiplayer, jucatorii isi pot creea conturi securizate si sa lege o conexiune prin WebSockets unde pot juca unul impotriva celuilalt.

@@ -9,23 +9,23 @@ export default function Home() {
     const user = state.user;
     return (
         <main className='flex items-center justify-center flex-col gap-5 pb-[3rem]'>
-            <h1 className='mt-auto text-center'>Warplanes ✈️</h1>  
+            <h1 className='mt-auto text-center text-[calc(3rem+3vw)]'>Warplanes ✈️</h1>  
             <Link to="/tables" className='mt-auto'>
-                <Button text='Play as guest' color='green' />
+                <Button text='Play as guest' color='yellow' />
             </Link>
             {user?.username ? 
             <Link to="/tables">
                 <Button text={'Play as '+user.username} />
             </Link>
             :
-            <>
+            <div className='flex gap-4'>
                 <Link to="/login">
                     <Button text='Log in' />
                 </Link>
                 <Link to="/register">
                     <Button text='Register' />
                 </Link>
-            </>
+            </div>
             }   
         </main>
     )

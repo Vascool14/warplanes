@@ -3,9 +3,10 @@ export type StateType = {
     user: UserType | null;
     menuOpen: boolean;
     theme: 'light' | 'dark';
-    sounds: { music: boolean, sfx: boolean };
-    airplanes: PlaneType[];
-    toast: {message: string; success: boolean; }
+    sounds: boolean;
+    music: boolean;
+    musicType: 'menu' | 'battle' | 'win' | 'lose' | 'arena-jingle'
+    canExit: boolean;
 }
 
 export type ContextType = {
@@ -14,11 +15,13 @@ export type ContextType = {
 };
 
 export type UserType = {
-    id: string;
     username: string;
     email: string;
-    wins: number;
-    losses: number;
+    gameStats: {
+        wins: number;
+        losses: number;
+        gold: number;
+    }
 }
 
 // game types
@@ -26,6 +29,7 @@ export type TileType = {
     head: boolean,
     body: boolean,
     hit: boolean,
+    planeNumber?: number
 }
 
 export type PlaneType = {
