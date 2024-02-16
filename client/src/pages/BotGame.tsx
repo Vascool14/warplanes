@@ -3,7 +3,6 @@ import { useEffect, useState, useContext } from "react"
 import { Context } from "../Context"
 import VanillaTilt from 'vanilla-tilt'
 import isMobile from "is-mobile"
-import { COLORS } from "../utils/Constants"
 import { generateRandomBoard, getRandomValidHeadIndex } from "../utils/Board"
 import PlaySound from "../sounds/PlaySound"
 // import Button from "../components/Button"
@@ -12,13 +11,14 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
     const { state, setState } = useContext(Context)
     const { user } = state
     const [ isPaused , setIsPaused ] = useState(false)
-    const [ myTurn , setMyTurn ] = useState(isGameSaved()?getMyLocalTurn():Math.random() > 0.5)
+    const [ myTurn , setMyTurn ] = useState(isGameSaved()?getLocalTurn():Math.random() > 0.5)
     const [ myBoard, setMyBoard ] = useState(isGameSaved()?getMyLocalBoard():generateRandomBoard(true))
     const [ botSelectedTile , setBotSelectedTile ] = useState(100)
     const [ winner , setWinner ] = useState('')
     const [ isTransparent , setIsTransparent ] = useState(false)
     const [ enemyBoard, setEnemyBoard ] = useState(isGameSaved()?getEnemyLocalBoard():generateRandomBoard())
     const [ timer , setTimer ] = useState(10)
+
     useEffect(() => {
         setTimeout(() => { setState({...state, musicType: 'arena-jingle'})}, 700);
         setTimeout(() => { 
@@ -34,6 +34,7 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
             resetLocalStorage()
         }
     }, [])
+
     useEffect(() => {
         if(timer <= 0){
             if(myTurn){setMyTurn(false);handleBotTurn()}
@@ -54,7 +55,9 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
         const newBoard = [...enemyBoard]
         newBoard[i].hit = true
         if(newBoard[i].body){
+            // @ts-ignore
             enemyBoardRef.style.transform = 'scale(0.95)'
+            // @ts-ignore
             setTimeout(() => { enemyBoardRef.style.transform = 'scale(1)' }, 200)
         }
         if(state.sounds){
@@ -87,7 +90,9 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
         setTimeout(() => {  
             newBoard[randomTile].hit = true
             if(newBoard[randomTile].body){
+                // @ts-ignore
                 myBoardRef.style.transform = 'scale(0.95)'
+                // @ts-ignore
                 setTimeout(() => { myBoardRef.style.transform = 'scale(1)' }, 200)
             }
             if(state.sounds){
@@ -126,7 +131,6 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
         resetLocalStorage()
     }
 
-
     // save the 2 boards and the turn in localStorage to persist on refresh
     window.onbeforeunload = () => { 
         localStorage.setItem('myBoard', JSON.stringify(myBoard))
@@ -136,7 +140,7 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
     function isGameSaved(){if(localStorage.getItem('myBoard')) return true;}
     function getMyLocalBoard(){return JSON.parse(localStorage.getItem('myBoard')||'')}
     function getEnemyLocalBoard(){return JSON.parse(localStorage.getItem('enemyBoard')||'')}
-    function getMyLocalTurn(){return JSON.parse(localStorage.getItem('myTurn')||'')}
+    function getLocalTurn(){return JSON.parse(localStorage.getItem('myTurn')||'')}
     function resetLocalStorage(){
         localStorage.removeItem('myBoard')
         localStorage.removeItem('enemyBoard')
@@ -147,24 +151,11 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
         // @ts-ignore
         VanillaTilt.init(boardsWrapper, { max:5, speed:400  });
     }
-    const userColor = user && user.username? COLORS[user.username.charCodeAt(0)%COLORS.length]: COLORS[0]
     return (
         <main className={`swipe-up flex flex-col gap-2 ${!mobile && 'sm:gap-8'} items-center justify-center h-screen overflow-hidden pt-0`}>
-            {/* <section className="w-screen fixed inset-0 overflow-hidden bg-[var(--sky)] flex justify-center">
-                {state.theme === 'dark' ? 
-                <div className="stars">
-                    <div id="star1"></div>
-                    <div id="star2"></div>
-                    <div id="star3"></div>
-                </div>
-                :<div id="cloud">
-                    <svg width="0"><filter id="filter"><feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="10" /><feDisplacementMap in="SourceGraphic" scale="240"/></filter></svg>
-                </div>
-                }
-            </section> */}
-            {/* <div className="fixed top-24 right-6 cursor-pointer"> */}
-                {/* <Button icon text={isPaused?'=':'|>'} onButtonClick={() => setIsPaused(prev => !prev)} /> */}
-            {/* </div> */}
+            {/* <div className="fixed top-24 right-6 cursor-pointer"> 
+                <Button icon text={isPaused?'=':'|>'} onButtonClick={() => setIsPaused(prev => !prev)} />
+            </div> */}
             <section className={`boardNav flex justify-center w-full h-[calc(2rem+4vw)] gap-6 ${!mobile && 'sm:gap-8'} min-h-[4.8rem] ${mobile ? 'scale-[0.7]':'mt-2'}`}>
                 <div className="h-full w-[50%] flex gap-4">
                     <h3 className="max-md:hidden overflow-clip text-[var(--white)] ml-auto mb-[-0.4rem] mt-auto">{user?.username || 'Guest'}</h3>
@@ -174,7 +165,7 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
                         }} width="100%" height="100%" viewBox="0 0 40 40">
                             {myTurn && <rect x="2" y="2" width="36" height="36" rx={8} ry={8} />}
                         </svg>
-                        <div className="icon" style={{backgroundColor: userColor}}><h2>{user && user.username? user.username[0]:'g'}</h2></div>
+                        <div className="icon" style={{backgroundColor: '#1e78d7'}}><h2>{user && user.username? user.username[0]:'g'}</h2></div>
                     </div>
                 </div>
 
@@ -209,8 +200,8 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
                 <section className="board" style={{opacity: myTurn?0.4:1}}>
                     {myBoard.map((tile: TileType, i:number) => ( 
                         <div key={i} className="tile"
-                        style={{background: botSelectedTile===i?'#c67':!tile.body?userColor+'22':
-                        tile.body&&tile.hit&&!tile.head?userColor:tile.head?'#999':userColor+'aa',
+                        style={{background: botSelectedTile===i?'#c67':!tile.body?'#1e78d7'+'22':
+                        tile.body&&tile.hit&&!tile.head?'#1e78d7':tile.head?'#999':'#1e78d7'+'aa',
                         transform: tile.hit && !tile.body?'scale(0.01)':'scale(1)'}}
                         >
                             {tile.hit && tile.body && <p>x</p>}

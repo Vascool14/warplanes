@@ -14,9 +14,8 @@ export default function Tables(){
         {name: 'vasile', difficulty: 'hard', emoji: '👨🏽‍🎓'}
     ]
     const [ tables, setTables ] = useState<{id: number; user: string; PIN?: string, details?: string}[]>([
-        {id: 12, user: 'vascool'},
-        {id: 87, user:'wirsfubanepd', PIN: '1234'},
-        {id: 23, user: 'vascool12', PIN: '0000'},
+        {id: 12, user: 'test'},
+        {id: 87, user:'test-with-lock', PIN: '1234'}
     ])
     function GetTables(){
         setLoading(true)
@@ -69,7 +68,7 @@ export default function Tables(){
                         <div key={i} className="table">
                             <h3 className="pl-2">{bot.name} {bot.emoji}</h3>
                             <p className="pl-2 mt-[-0.5rem]">difficulty: {bot.difficulty}</p>
-                            <Link to={`/tables/bot-${bot.name}`}>
+                            <Link to={`/bot-${bot.name}/set-planes`}>
                                 <Button text={'join'} color="yellow" sound="attack" />
                             </Link>
                         </div>

@@ -10,6 +10,7 @@ const Menu = lazy(() => import('./components/Menu'))
 const Tables = lazy(() => import('./pages/Tables'))
 const BotGame = lazy(() => import('./pages/BotGame'))
 const Game = lazy(() => import('./pages/Game'))
+const SetPlanes = lazy(() => import('./pages/SetPlanes'))
 const Account = lazy(() => import('./pages/auth/Account'))
 const Login = lazy(() => import('./pages/auth/Login'))
 const Register = lazy(() => import('./pages/auth/Register'))
@@ -43,11 +44,7 @@ export default function App() {
                     <div id="star1"></div>
                     <div id="star2"></div>
                     <div id="star3"></div>
-                </div>
-                :<div id="cloud">
-                    <svg width="0"><filter id="filter"><feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="10" /><feDisplacementMap in="SourceGraphic" scale="240"/></filter></svg>
-                </div>
-                }
+                </div>:<div id="cloud"></div>}
             </section>
             {/* <div className="fixed inset-0 w-screen h-screen svgBackground"></div> */}
             <div style={{perspective: 800, zIndex: 1, overflow:'hidden'}}>
@@ -56,9 +53,6 @@ export default function App() {
                     <Menu />
                     {state.music && <GameMusic />}
                         <Routes>
-                            <Route path='/1' element={<main className='swipe-up bg-red-500'><h1>Page 1</h1></main>} />
-                            <Route path='/2' element={<main className='swipe-up bg-green-300'><h1>Page 2</h1></main>} />
-                            
                             <Route path="/" element={<Home />} />
 
                             <Route path="/account" element={<Account />} />
@@ -66,9 +60,12 @@ export default function App() {
                             <Route path="/register" element={<Register />} />
 
                             <Route path="/tables" element={<Tables />} />
-                            <Route path="/tables/bot-ioana" element={<BotGame bot="ioana" />} />
-                            <Route path="/tables/bot-andrei" element={<BotGame bot="andrei" />} />
-                            <Route path="/tables/bot-vasile" element={<BotGame bot="vasile" />} /> 
+                            <Route path="bot-ioana/set-planes" element={<SetPlanes bot="ioana" />} />
+                            <Route path="bot-andrei/set-planes" element={<SetPlanes bot="andrei" />} />
+                            <Route path="bot-vasile/set-planes" element={<SetPlanes bot="vasile" />} />
+                            <Route path="bot-ioana" element={<BotGame bot="ioana" />} />
+                            <Route path="bot-andrei" element={<BotGame bot="andrei" />} />
+                            <Route path="bot-vasile" element={<BotGame bot="vasile" />} /> 
                             <Route path="/tables/:id" element={<Game />} />
                             <Route path="*" element={<Page404 />} />
                         </Routes>

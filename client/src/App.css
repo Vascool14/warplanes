@@ -1,7 +1,7 @@
 .btnWrapper{
     border-radius: var(--radius);
     position: relative;
-    border: 3px solid var(--gray);
+    /* border: 3px solid var(--gray); */
 }
 .btnWrapper.green{background: var(--greenDark);}
 .btnWrapper.green button{background: var(--green);}

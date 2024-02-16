@@ -20,8 +20,8 @@ export default function Menu() {
     const navigate = useNavigate();
     return (   
         <>    
-            <aside className="z-[100] overflow-y-scroll bg-[var(--bg)] h-[min(70vh,56rem)] w-[min(86vw,36rem)] rounded-[calc(var(--radius)+5px)]
-            fixed left-[50%] top-[50%] transition-all duration-300 flex flex-col items-center gap-2 squishy p-5 pt-6 border-[4px] border-[var(--gray)]" 
+            <aside className="z-[100] overflow-y-scroll bg-[var(--bg)] h-[min(50vh,40rem)] w-[min(86vw,36rem)] rounded-[calc(var(--radius)+5px)]
+            fixed left-[50%] top-[50%] transition-all duration-300 flex flex-col items-center gap-2 squishy p-5 pt-6" 
             style={{transform: state.menuOpen?'translate(-50%,-50%)':'translate(-50%,-200vh)'}}>
                 <div className="absolute right-5">
                     <Button text='x' icon color='red' onButtonClick={() => setState({...state, menuOpen: false})} />

@@ -1,9 +1,13 @@
-# Jocul "Warplanes" este o adaptare a un joc popular din copilarie, jucat intre 2 adversari, pe hartie numit "Avioane".
+# Warplanes
 
-# Reguli de joc:
-## Fiecare jucator are cate 2 “radare”. In primul, jucatorul isi poziţioneaza 3 avioane, iar in al doilea incearca sa loveasca avioanele adversarului. Cele 2 radare sunt 2 matrice 10x10.
+> The game "Warplanes" is an adaptation of a popular childhood game, played between 2 opponents on paper called "Avioane".
 
- <!-- este construit cu React si Node.js si permite jucatorilor sa joace impotriva unui bot inteligent sau in mod multiplayer cu ajutorul WebSockets. -->
-## Scopul jocului este sa distrugi avioanele inamice prin alegerea pozitiilor pe tabla de joc. Jocul este similar cu "Battleship", dar in loc de nave, jucatorii trebuie sa gaseasca si sa distruga avioanele inamice.
+## RULES:
+- Each player has 2 "radars". In the first one, the player positions 3 planes, and in the second one tries to hit the opponent's planes. The 2 radars are 2 10x10 matrices.
 
-## Jocul poate fi jucat in modul singleplayer sau multiplayer. In modul singleplayer, jucatorul joaca impotriva unui bot inteligent care are 3 niveluri de dificultate, iar in modul multiplayer, jucatorii isi pot creea conturi securizate si sa lege o conexiune prin WebSockets unde pot juca unul impotriva celuilalt.
+## THE GOAL:
+- Destroy enemy planes by choosing positions on the game board. The game is similar to "Battleship", but instead of ships, players must find and destroy enemy planes.
+
+___
+
+The game can be played in singleplayer or multiplayer mode. In singleplayer mode, the player plays against an intelligent bot that has 3 difficulty levels, and in multiplayer mode, players can create secure accounts and link a connection through WebSockets where they can play against each other.
