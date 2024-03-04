@@ -1,5 +1,13 @@
 <style>
-
+    body{
+        background-color: #224;
+        color: #f0f0f0;
+    }
+    h1{
+        color: #f0f0f0;
+        padding: 1rem;
+        border-radius: 0.5rem;
+    }
 </style>
 
 <h1 style="text-align: center; font-size: 4rem">Warplanes</h1>
