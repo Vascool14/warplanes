@@ -10,7 +10,7 @@ const Menu = lazy(() => import('./components/Menu'))
 const Tables = lazy(() => import('./pages/Tables'))
 const BotGame = lazy(() => import('./pages/BotGame'))
 const Game = lazy(() => import('./pages/Game'))
-const SetPlanes = lazy(() => import('./pages/SetPlanes'))
+// const SetPlanes = lazy(() => import('./pages/SetPlanes'))
 const Account = lazy(() => import('./pages/auth/Account'))
 const Login = lazy(() => import('./pages/auth/Login'))
 const Register = lazy(() => import('./pages/auth/Register'))
@@ -62,7 +62,7 @@ export default function App() {
 
                         <Route path="/table" element={<Tables />} />
 
-                        <Route path="/table/:id/setup" element={<SetPlanes />} />
+                        {/* <Route path="/table/:id/setup" element={<SetPlanes />} /> */}
                         <Route path="/table/bot-ioana" element={<BotGame bot="ioana" />} />
                         <Route path="/table/bot-andrei" element={<BotGame bot="andrei" />} />
                         <Route path="/table/bot-vasile" element={<BotGame bot="vasile" />} /> 

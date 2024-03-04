@@ -5,20 +5,27 @@ import VanillaTilt from 'vanilla-tilt'
 import isMobile from "is-mobile"
 import { generateRandomBoard, getRandomValidHeadIndex } from "../utils/Board"
 import PlaySound from "../sounds/PlaySound"
+// import Button from "../components/Button"
+import SetPlanes from "./SetPlanes"
 
 export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
     const { state, setState } = useContext(Context)
     const { user } = state
-    const [ myTurn , setMyTurn ] = useState(isGameSaved()?getLocalTurn():Math.random() > 0.5)
-    const [ myBoard, setMyBoard ] = useState(isMyBoardSaved()?getMyLocalBoard():generateRandomBoard(true))
+
+    const [ isBoardReady , setIsBoardReady ] = useState<boolean>(false)
+    const [ myBoard, setMyBoard ] = useState<TileType[]>(Array(100).fill({head:false, body:false, hit:false}))
+    const [ myTurn , setMyTurn ] = useState(Math.random() > 0.5)
+    const [ enemyBoard, setEnemyBoard ] = useState(generateRandomBoard())
+
     const [ botSelectedTile , setBotSelectedTile ] = useState(100)
     const [ winner , setWinner ] = useState('')
     const [ isTransparent , setIsTransparent ] = useState(false)
-    const [ enemyBoard, setEnemyBoard ] = useState(isGameSaved()?getEnemyLocalBoard():generateRandomBoard())
     const [ timer , setTimer ] = useState(10)
 
     useEffect(() => {
-        setTimeout(() => { setState({...state, musicType: 'arena-jingle'})}, 700);
+        setState({...state, musicType: 'arena-jingle'})
+        if(!isBoardReady) return;
+        
         setTimeout(() => { 
             setState({...state, canExit: true, musicType: 'battle'}); 
             if(!myTurn) handleBotTurn()
@@ -29,9 +36,8 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
         }, 1000);
         return () => {
             clearInterval(interval) 
-            resetLocalStorage()
         }
-    }, [])
+    }, [isBoardReady])
 
     useEffect(() => {
         if(timer <= 0){
@@ -39,6 +45,9 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
             else setMyTurn(true);
         }
     }, [timer])
+
+    // setup "modal"
+    if(!isBoardReady) return <SetPlanes board={myBoard} setBoard={setMyBoard} setBoardReady={setIsBoardReady} />
 
     const mobile = isMobile()
     
@@ -126,25 +135,8 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
         setMyTurn(true)
         setWinner('')
         setIsTransparent(false)
-        resetLocalStorage()
     }
 
-    // save the 2 boards and the turn in localStorage to persist on refresh
-    window.onbeforeunload = () => { 
-        localStorage.setItem('myBoard', JSON.stringify(myBoard))
-        localStorage.setItem('enemyBoard', JSON.stringify(enemyBoard))
-        localStorage.setItem('myTurn', JSON.stringify(myTurn))
-    }
-    function isMyBoardSaved(){if(localStorage.getItem('myBoard')) return true;}
-    function isGameSaved(){if(localStorage.getItem('myBoard') && localStorage.getItem('enemyBoard') && localStorage.getItem('myTurn')) return true;}
-    function getMyLocalBoard(){return JSON.parse(localStorage.getItem('myBoard')||'')}
-    function getEnemyLocalBoard(){return JSON.parse(localStorage.getItem('enemyBoard')||'')}
-    function getLocalTurn(){return JSON.parse(localStorage.getItem('myTurn')||'')}
-    function resetLocalStorage(){
-        localStorage.removeItem('myBoard')
-        localStorage.removeItem('enemyBoard')
-        localStorage.removeItem('myTurn')
-    }
     if(!mobile){
         const boardsWrapper = document.getElementById('boardWrapper')
         // @ts-ignore
@@ -164,7 +156,7 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
                         }} width="100%" height="100%" viewBox="0 0 40 40">
                             {myTurn && <rect x="2" y="2" width="36" height="36" rx={8} ry={8} />}
                         </svg>
-                        <div className="icon" style={{backgroundColor: '#1e78d7'}}><h2>{user && user.username? user.username[0]:'g'}</h2></div>
+                        <div className="icon" style={{backgroundColor: '#1e78d7aa'}}><h2>{user && user.username? user.username[0]:'g'}</h2></div>
                     </div>
                 </div>
 

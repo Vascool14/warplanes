@@ -48,7 +48,7 @@ export default function Tables(){
         if(table.PIN){
             
         }
-        navigate(table.PIN?'':`/table/id=${table.id}/setup`)
+        navigate(table.PIN?'':`/table/id=${table.id}`)
     }
 
     useEffect(() => {
@@ -78,7 +78,7 @@ export default function Tables(){
                         <div key={i} className="table">
                             <h3 className="pl-2">{bot.name} {bot.emoji}</h3>
                             <p className="pl-2 mt-[-0.5rem]">difficulty: {bot.difficulty}</p>
-                            <Link to={`/table/bot-${bot.name}/setup`}>
+                            <Link to={`/table/bot-${bot.name}`}>
                                 <Button text={'join'} color="yellow" sound="attack" />
                             </Link>
                         </div>

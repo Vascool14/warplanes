@@ -12,8 +12,6 @@ export default function Menu() {
         const newTheme = ( state.theme =='dark'?'light':'dark');
         document.documentElement.setAttribute('data-theme', newTheme );
         document.querySelector('meta[name="theme-color"]')?.setAttribute('content', getComputedStyle(document.documentElement).getPropertyValue('--sky'));
-        // clear localStorage
-        localStorage.clear();
         setState({...state, theme: newTheme});
     } 
     // const year = new Date().getFullYear();

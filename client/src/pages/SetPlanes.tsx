@@ -1,30 +1,21 @@
 import { useEffect, useState } from "react";
 import { TileType, PlaneType, RotationType } from "../types";
-import { useNavigate, useLocation } from "react-router-dom";
 import Button from "../components/Button";
 import { canAddPlaneToBoard, turnValidValuesToBoard, turnBoardToPlanes, generateRandomBoard } from "../utils/Board";
 import PlaySound from "../sounds/PlaySound";
 
-export default function SetPlanes() {
-    const [ board, setBoard ] = useState<TileType[]>(Array(100).fill({body:false, head:false, hit:false}));
+export default function SetPlanes({board, setBoard, setBoardReady}: {board:TileType[], setBoard:Function, setBoardReady:Function}) {
     const [ planes, setPlanes ] = useState<PlaneType[]>([]);
     const [ isError, setError ] = useState(false);
-
-    const location = useLocation();
-    const navigate = useNavigate();
 
     const ROTATIONS:RotationType[] = ['up', 'left', 'down', 'right'];
 
     function handleSubmit(){
         // allow to go forward only if the board has 3 planes
-        if(board.filter(tile => tile.head).length !== 3) return;
-        localStorage.setItem('myBoard', JSON.stringify(board))
-        localStorage.removeItem('enemyBoard')
-        localStorage.removeItem('myTurn')
-        navigate(location.pathname.slice(0, location.pathname.lastIndexOf('/')));
-
-        // to 'burn' this page from history, so the user can't go back to it after the game has started, just:
-
+        if(planes.length != 3) return triggerError();
+        PlaySound('start');
+        setBoard(turnValidValuesToBoard(planes));
+        setBoardReady(true);
     }
 
     function handleTileClick(index: number){
@@ -90,7 +81,7 @@ export default function SetPlanes() {
     }, [isError]);
     return (
         <main className="flex items-center justify-center flex-col gap-2 text-center">
-            <h1>Set&nbsp;up&nbsp;planes</h1>
+            <h1 className="mt-[-1rem]">Set&nbsp;up&nbsp;<span className="max-md:hidden">planes</span></h1>
             <p>Tap once to add plane<br/>Tap head to rotate<br/>Double-tap head to remove plane</p>
             <section className="board mb-auto mt-4">
                 {board.map((tile: TileType, i:number) => ( 

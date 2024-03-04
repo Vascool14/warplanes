@@ -23,7 +23,7 @@ export default function Game() {
     const [ timer, setTimer ] = useState(10)
     const [ myTurn , setMyTurn ] = useState(true)
     const [ enemyBoard, setEnemyBoard ] = useState(generateRandomBoard())
-    const [ myBoard, setMyBoard ] = useState(getMyLocalBoard())
+    const [ myBoard, setMyBoard ] = useState(generateRandomBoard())
     const [ winner , setWinner ] = useState('')
     const [ isTransparent , setIsTransparent ] = useState(false)
     useEffect(() => {
@@ -148,10 +148,6 @@ export default function Game() {
             setShowEmoji(prev => !prev); setInputValue(''); setIsWriting(false)} 
         } 
 
-    function getMyLocalBoard(){ 
-        if(localStorage.getItem('myBoard') === null) localStorage.setItem('myBoard', JSON.stringify(generateRandomBoard()));
-        return JSON.parse(localStorage.getItem('myBoard')!)
-    }
     return (
         <main className={`swipe-up flex flex-col gap-2 ${!mobile && 'sm:gap-8'} items-center justify-center max-sm:justify-between pt-0`}>
             <section className={`boardNav flex justify-center w-full h-[calc(2rem+4vw)] gap-4 ${!mobile && 'sm:gap-8'} min-h-[4.8rem] ${mobile ? 'scale-[0.7]':'mt-2'}`}>

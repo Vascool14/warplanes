@@ -1,4 +1,8 @@
-# Warplanes
+<style>
+    
+</style>
+
+<h1 style="text-align: center; font-size: 4rem">Warplanes</h1>
 
 > The game "Warplanes" is an adaptation of a popular childhood game, played between 2 opponents on paper called "Avioane".
 
@@ -11,6 +15,43 @@
 ___
 
 The game can be played in singleplayer or multiplayer mode. In singleplayer mode, the player plays against an intelligent bot that has 3 difficulty levels, and in multiplayer mode, players can create secure accounts and link a connection through WebSockets where they can play against each other.
+
+___
+
+# INSTALLATION:
+
+### 1. Clone the repository:  
+
+```bash
+git clone https://github.com/Vascool14/warplanes
+```
+
+### 2. Install the dependencies:
+
+```bash
+cd client
+npm install
+
+# From here on, continue ONLY if you want to run live online games against real people >
+cd server
+npm install
+
+# You will need an account on MongoDB Atlas and create a database to connect to:
+# Create a new file in "/server/.env" to dump sensitive data:
+MONGO_URI=.... # also hide it in the .gitignore, the whole point of the .env file ;)
+```
+
+
+### 3. Start the client:
+
+```bash
+cd client
+npm run dev  # and open -> http://localhost:5173 
+```
+
+
+
+___
 
 
 ![in-browser](./screenshots/in-browser.png)
