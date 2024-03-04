@@ -1,28 +1,28 @@
-<style>
-    body{
-        background-color: #224;
-        color: #f0f0f0;
-    }
-    h1{
-        color: #f0f0f0;
-        padding: 1rem;
-        border-radius: 0.5rem;
-    }
-</style>
-
 <h1 style="text-align: center; font-size: 4rem">Warplanes</h1>
 
 > The game "Warplanes" is an adaptation of a popular childhood game, played between 2 opponents on paper called "Avioane".
 
 ## RULES:
 - Each player has 2 "radars". In the first one, the player positions 3 planes, and in the second one tries to figure out the positions and hit the opponent's planes. The 2 radars are 10x10 matrices.
+- The players take turns to choose a position on the game board, and the opponent must say if the position is a hit or a miss, but this version of the game automatically marks the position, without the need for the opponent to say anything.
 
 ## THE GOAL:
 - Destroy enemy planes by choosing positions on the game board. The game is similar to "Battleship", but instead of ships, players must find and destroy enemy planes.
+- The first player to destroy all 3 enemy planes wins the game.
 
 ___
 
-The game can be played in singleplayer or multiplayer mode. In singleplayer mode, the player plays against an intelligent bot that has 3 difficulty levels, and in multiplayer mode, players can create secure accounts and link a connection through WebSockets where they can play against each other.
+## FEATURES:
+
+### The game can be played in singleplayer or multiplayer mode. 
+1. **Singleplayer mode** is avaliable even offline, the player plays against an AI bot that has 3 difficulty levels: 
+    > **Easy - Bot Ioana**  - takes anywhere from **18-25 moves** to win
+
+    > **Medium - Bot Andrei** - takes **15-20 moves** to win
+
+    > **Hard - Bot Vasile**  - takes **12-18 moves** to win  
+
+2. **Multiplayer mode** is best used when next to aonther person on a different device, players can create secure accounts and link a connection through WebSockets where they can play against each other.
 
 ___
 
