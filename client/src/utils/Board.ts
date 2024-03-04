@@ -1,9 +1,9 @@
 import { TileType, PlaneType, RotationType } from '../types';
 
-function positionsUp(h: number){if(h%10<2 || h%10>7 || h>69) return [-1];  return [h, h+8, h+9, h+10, h+11, h+12, h+20, h+29, h+30, h+31] }
-function positionsDown(h: number){ if(h%10<2 || h%10>7 || h<30) return [-1];  return [h, h-8, h-9, h-10, h-11, h-12, h-20, h-29, h-30, h-31] }
-function positionsRight(h: number){ if(h%10<3 || h>79 || h<20) return [-1];  return [h, h-21, h-11, h-1, h+9, h+19, h-2, h-13, h-3, h+7] }
-function positionsLeft(h: number){ if(h%10>6 || h>79 || h<20) return [-1];  return [h, h-19, h-9, h+1, h+11, h+21, h+2, h-7, h+3, h+13] }
+function positionsUp(i:number){if(i%10<2 || i%10>7 || i>69) return[-1]; return[i, i+8, i+9, i+10, i+11, i+12, i+20, i+29, i+30, i+31]}
+function positionsDown(i:number){if(i%10<2 || i%10>7 || i<30) return[-1]; return[i, i-8, i-9, i-10, i-11, i-12, i-20, i-29, i-30, i-31]}
+function positionsRight(i:number){if(i%10<3 || i>79 || i<20) return[-1]; return[i, i-21, i-11, i-1, i+9, i+19, i-2, i-13, i-3, i+7]}
+function positionsLeft(i:number){if(i%10>6 || i>79 || i<20) return[-1]; return[i, i-19, i-9, i+1, i+11, i+21, i+2, i-7, i+3, i+13]}
 
 export function turnValidValuesToBoard(values: PlaneType[], forBot?:boolean): TileType[]{
     let board: TileType[] = [];
@@ -31,6 +31,20 @@ export function turnValidValuesToBoard(values: PlaneType[], forBot?:boolean): Ti
     return board;
 }
 
+export function turnBoardToPlanes(board: TileType[]): PlaneType[]{
+    const planes:PlaneType[] = [];
+    const heads = board.filter((tile) => tile.head);
+    heads.forEach((head) => {
+        const headIndex = board.indexOf(head);
+        if(positionsUp(headIndex).every((pos) => pos !== -1 && board[pos].body)) planes.push({headIndex, rotation: 'up'});
+        if(positionsDown(headIndex).every((pos) => pos !== -1 && board[pos].body)) planes.push({headIndex, rotation: 'down'});
+        if(positionsRight(headIndex).every((pos) => pos !== -1 && board[pos].body)) planes.push({headIndex, rotation: 'right'});
+        if(positionsLeft(headIndex).every((pos) => pos !== -1 && board[pos].body)) planes.push({headIndex, rotation: 'left'});
+    })
+    return planes;
+
+}
+
 //////////////////////////////// BOT LOGIC ///////////////////////////////////////
 const INVALID_HEAD_INDEXES = [0,1,8,9,10,11,18,19,80,81,88,89,90,91,98,99];
 const ROTATIONS:RotationType[] = ['up','down','right','left'];
@@ -42,7 +56,7 @@ export function canAddPlaneToBoard(board: TileType[], plane: PlaneType): boolean
     const rotation = plane.rotation;
     if (rotation === 'up') { return positionsUp(head).every((pos) => pos !== -1 && !board[pos].body); }
     if (rotation === 'down') { return positionsDown(head).every((pos) => pos !== -1 && !board[pos].body); }
-    if (rotation === 'right') { return positionsRight(head).every((pos) => { pos !== -1 && !board[pos].body; }) }
+    if (rotation === 'right') { return positionsRight(head).every((pos) => pos !== -1 && !board[pos].body); }
     if (rotation === 'left') { return positionsLeft(head).every((pos) => pos !== -1 && !board[pos].body); }
     return true;
 }

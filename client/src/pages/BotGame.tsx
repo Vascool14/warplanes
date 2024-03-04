@@ -5,14 +5,12 @@ import VanillaTilt from 'vanilla-tilt'
 import isMobile from "is-mobile"
 import { generateRandomBoard, getRandomValidHeadIndex } from "../utils/Board"
 import PlaySound from "../sounds/PlaySound"
-// import Button from "../components/Button"
 
 export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
     const { state, setState } = useContext(Context)
     const { user } = state
-    const [ isPaused , setIsPaused ] = useState(false)
     const [ myTurn , setMyTurn ] = useState(isGameSaved()?getLocalTurn():Math.random() > 0.5)
-    const [ myBoard, setMyBoard ] = useState(isGameSaved()?getMyLocalBoard():generateRandomBoard(true))
+    const [ myBoard, setMyBoard ] = useState(isMyBoardSaved()?getMyLocalBoard():generateRandomBoard(true))
     const [ botSelectedTile , setBotSelectedTile ] = useState(100)
     const [ winner , setWinner ] = useState('')
     const [ isTransparent , setIsTransparent ] = useState(false)
@@ -27,7 +25,7 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
         }, 4000);
         
         const interval = setInterval(() => {
-            if(timer > 0 && !isPaused) setTimer(prev => prev - 1)
+            if(timer > 0) setTimer(prev => prev - 1)
         }, 1000);
         return () => {
             clearInterval(interval) 
@@ -61,8 +59,8 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
             setTimeout(() => { enemyBoardRef.style.transform = 'scale(1)' }, 200)
         }
         if(state.sounds){
-            if(newBoard[i].head) PlaySound('head'+Math.floor(Math.random()*2+1))
-            else if(newBoard[i].body) PlaySound('hit'+Math.floor(Math.random()*2+1))
+            if(newBoard[i].head) PlaySound('head')
+            else if(newBoard[i].body) PlaySound('hit')
             else PlaySound('miss')
         } 
         setEnemyBoard(newBoard)
@@ -137,7 +135,8 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
         localStorage.setItem('enemyBoard', JSON.stringify(enemyBoard))
         localStorage.setItem('myTurn', JSON.stringify(myTurn))
     }
-    function isGameSaved(){if(localStorage.getItem('myBoard')) return true;}
+    function isMyBoardSaved(){if(localStorage.getItem('myBoard')) return true;}
+    function isGameSaved(){if(localStorage.getItem('myBoard') && localStorage.getItem('enemyBoard') && localStorage.getItem('myTurn')) return true;}
     function getMyLocalBoard(){return JSON.parse(localStorage.getItem('myBoard')||'')}
     function getEnemyLocalBoard(){return JSON.parse(localStorage.getItem('enemyBoard')||'')}
     function getLocalTurn(){return JSON.parse(localStorage.getItem('myTurn')||'')}

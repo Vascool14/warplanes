@@ -25,17 +25,17 @@ axios.defaults.baseURL = 'http://localhost:8080/';
 export default function App() {
     const { state, setState } = useContext(Context)
         
-    useEffect(() => {
-        if(document.cookie.length > 0){
-            axios.get('/me', { headers: { Authorization: `Bearer ${document.cookie.split('=')[1]}` } })
-            .then(res => {
-                const { username, email, gameStats } = res.data;
-                setState({ ...state, user: { username, email, gameStats }})
-            }).catch(err => {
-                console.log(err);
-            })
-        }
-    }, [])
+    // useEffect(() => {
+    //     if(document.cookie.length > 0){
+    //         axios.get('/me', { headers: { Authorization: `Bearer ${document.cookie.split('=')[1]}` } })
+    //         .then(res => {
+    //             const { username, email, gameStats } = res.data;
+    //             setState({ ...state, user: { username, email, gameStats }})
+    //         }).catch(err => {
+    //             console.log(err);
+    //         })
+    //     }
+    // }, [])
     return (
         <div className='flex'>
             <section className="w-screen fixed inset-0 overflow-hidden bg-[var(--sky)] flex justify-center">
@@ -52,39 +52,27 @@ export default function App() {
                     <Nav />
                     <Menu />
                     {state.music && <GameMusic />}
-                        <Routes>
-                            <Route path="/" element={<Home />} />
+                    <Routes>
+                        <Route path="/" element={<Home />} />
 
-                            <Route path="/account" element={<Account />} />
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/register" element={<Register />} />
+                        <Route path="/account" element={<Account />} />
+                        <Route path="/login" element={<Login />} />
 
-                            <Route path="/tables" element={<Tables />} />
-                            <Route path="bot-ioana/set-planes" element={<SetPlanes bot="ioana" />} />
-                            <Route path="bot-andrei/set-planes" element={<SetPlanes bot="andrei" />} />
-                            <Route path="bot-vasile/set-planes" element={<SetPlanes bot="vasile" />} />
-                            <Route path="bot-ioana" element={<BotGame bot="ioana" />} />
-                            <Route path="bot-andrei" element={<BotGame bot="andrei" />} />
-                            <Route path="bot-vasile" element={<BotGame bot="vasile" />} /> 
-                            <Route path="/tables/:id" element={<Game />} />
-                            <Route path="*" element={<Page404 />} />
-                        </Routes>
+                        <Route path="/register" element={<Register />} />
+
+                        <Route path="/table" element={<Tables />} />
+
+                        <Route path="/table/:id/setup" element={<SetPlanes />} />
+                        <Route path="/table/bot-ioana" element={<BotGame bot="ioana" />} />
+                        <Route path="/table/bot-andrei" element={<BotGame bot="andrei" />} />
+                        <Route path="/table/bot-vasile" element={<BotGame bot="vasile" />} /> 
+                        <Route path="/table/:id" element={<Game />} />
+                        
+                        <Route path="*" element={<Page404 />} />
+                    </Routes>
                 </Suspense>
             </div>
 
         </div>
     )
 }
-
-        {/* <section className="w-screen fixed inset-0 overflow-hidden bg-[var(--sky)] flex justify-center">
-            {state.theme === 'dark' ? 
-            <div className="stars">
-                <div id="star1"></div>
-                <div id="star2"></div>
-                <div id="star3"></div>
-            </div>
-            :<div id="cloud">
-                <svg width="0"><filter id="filter"><feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="10" /><feDisplacementMap in="SourceGraphic" scale="240"/></filter></svg>
-            </div>
-            }
-        </section> */}

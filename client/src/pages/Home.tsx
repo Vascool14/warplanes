@@ -10,11 +10,11 @@ export default function Home() {
     return (
         <main className='flex items-center justify-center flex-col gap-5 pb-[3rem]'>
             <h1 className='mt-auto text-center text-[calc(3rem+3vw)]'>Warplanes ✈️</h1>  
-            <Link to="/tables" className='mt-auto'>
+            <Link to="/table" className='mt-auto'>
                 <Button text='Play as guest' color='yellow' />
             </Link>
             {user?.username ? 
-            <Link to="/tables">
+            <Link to="/table">
                 <Button text={'Play as '+user.username} />
             </Link>
             :

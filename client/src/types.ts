@@ -38,3 +38,9 @@ export type PlaneType = {
 }
 
 export type RotationType = 'up' | 'down' | 'right' | 'left';
+
+export type TableType = {
+    id: number;
+    user: string;
+    PIN?: string;
+}

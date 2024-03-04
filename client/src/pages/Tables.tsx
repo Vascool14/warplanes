@@ -2,8 +2,9 @@ import Button from "../components/Button";
 import { useState, useContext, useEffect } from "react";
 import { Context } from "../Context";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import '../App.css'
+import { TableType } from "../types";
 
 export default function Tables(){
     const { state, setState } = useContext<any>(Context);
@@ -41,6 +42,15 @@ export default function Tables(){
     //         setState({...state, toast: {message: err.message, success: false}})
     //     });
     // }
+
+    const navigate = useNavigate();
+    function handleClick(table: TableType){
+        if(table.PIN){
+            
+        }
+        navigate(table.PIN?'':`/table/id=${table.id}/setup`)
+    }
+
     useEffect(() => {
         GetTables();
         setState({...state, canExit: true, musicType: 'menu'})
@@ -68,7 +78,7 @@ export default function Tables(){
                         <div key={i} className="table">
                             <h3 className="pl-2">{bot.name} {bot.emoji}</h3>
                             <p className="pl-2 mt-[-0.5rem]">difficulty: {bot.difficulty}</p>
-                            <Link to={`/bot-${bot.name}/set-planes`}>
+                            <Link to={`/table/bot-${bot.name}/setup`}>
                                 <Button text={'join'} color="yellow" sound="attack" />
                             </Link>
                         </div>
@@ -83,9 +93,9 @@ export default function Tables(){
                         <div key={i} className="table">
                             <h3 className="pl-1">{table.user}</h3>
                             <p className="pl-1 mt-[-0.5rem]">table id: <span className="text-[var(--gray)]">{table.id}</span></p>
-                            <Link to={`/tables/id=${table.id}`}>
-                                <Button text={table.PIN?'🔒':'join'} color="green" sound="attack" />
-                            </Link>
+                            <div onClick={() => handleClick(table)}>
+                                <Button text={table.PIN?'🔒':'join'} color="green" sound={table.PIN?"hit":"attack"} />
+                            </div>
                         </div>
                     )):
                         <h3 className="text-center col-span-full">No open tables found</h3>
