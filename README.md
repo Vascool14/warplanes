@@ -1,5 +1,5 @@
 <style>
-    
+
 </style>
 
 <h1 style="text-align: center; font-size: 4rem">Warplanes</h1>
@@ -26,30 +26,26 @@ ___
 git clone https://github.com/Vascool14/warplanes
 ```
 
-### 2. Install the dependencies:
+### 2. Install and Run the "client":
 
 ```bash
 cd client
 npm install
+npm run dev  # and open -> http://localhost:5173
+```
 
-# From here on, continue ONLY if you want to run live online games against real people >
+### 3 (Optional). Install and Run the "server":
+
+```bash
+# continue ONLY if you want to run app online ⬇️
 cd server
 npm install
+npm run dev # server open on PORT=8080 (depends on .env file)
 
-# You will need an account on MongoDB Atlas and create a database to connect to:
-# Create a new file in "/server/.env" to dump sensitive data:
-MONGO_URI=.... # also hide it in the .gitignore, the whole point of the .env file ;)
+# Need MongoDB account and create a cluster to connect to:
+# Create ".env" file in the "server" directory:
+MONGO_URI=.... # also hide it in the .gitignore ;)
 ```
-
-
-### 3. Start the client:
-
-```bash
-cd client
-npm run dev  # and open -> http://localhost:5173 
-```
-
-
 
 ___
 
