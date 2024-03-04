@@ -7,7 +7,7 @@
 > The game "Warplanes" is an adaptation of a popular childhood game, played between 2 opponents on paper called "Avioane".
 
 ## RULES:
-- Each player has 2 "radars". In the first one, the player positions 3 planes, and in the second one tries to hit the opponent's planes. The 2 radars are 2 10x10 matrices.
+- Each player has 2 "radars". In the first one, the player positions 3 planes, and in the second one tries to figure out the positions and hit the opponent's planes. The 2 radars are 10x10 matrices.
 
 ## THE GOAL:
 - Destroy enemy planes by choosing positions on the game board. The game is similar to "Battleship", but instead of ships, players must find and destroy enemy planes.
