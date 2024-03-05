@@ -51,7 +51,8 @@ npm install
 
 # create ".env" file in the "server" directory with the following command:
 echo "PORT=8080" > .env
-npm run dev # server open on PORT=8080 (depends on .env file)
+# open server on PORT=8080
+npm run dev 
 
 # Need MongoDB account and create a cluster to connect to:
 MONGO_URI=.... # add it to the .env file
