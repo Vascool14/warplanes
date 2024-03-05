@@ -48,11 +48,13 @@ npm run dev  # and open -> http://localhost:5173
 # continue ONLY if you want to run app online ⬇️
 cd server
 npm install
+
+# create ".env" file in the "server" directory with the following command:
+echo "PORT=8080" > .env
 npm run dev # server open on PORT=8080 (depends on .env file)
 
 # Need MongoDB account and create a cluster to connect to:
-# Create ".env" file in the "server" directory:
-MONGO_URI=.... # also hide it in the .gitignore ;)
+MONGO_URI=.... # add it to the .env file
 ```
 
 ___
