@@ -20,8 +20,8 @@ export default function Login() {
         if(email.length < 3 || password.length < 3) return;
         axios.post('/login', { email, password})
         .then(res => {
-            const { username, email, gameStats } = res.data.user;
-            setState({ ...state, user: { username, email, gameStats }})
+            const { username, email, gameStats, id } = res.data.user;
+            setState({ ...state, user: { username, email, id, gameStats }})
             document.cookie = `token=${res.data.token}; path=/; max-age=2592000`; // 30 days
             navigate('/account');
         }).catch(err => {

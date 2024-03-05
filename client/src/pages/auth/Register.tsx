@@ -6,7 +6,6 @@ import axios from "axios";
 
 export default function Register() {
     const { state, setState } = useContext(Context);
-    const user = state.user;
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

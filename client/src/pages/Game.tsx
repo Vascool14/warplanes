@@ -23,7 +23,9 @@ export default function Game() {
     const [ timer, setTimer ] = useState(10)
     const [ myTurn , setMyTurn ] = useState(true)
     const [ enemyBoard, setEnemyBoard ] = useState(generateRandomBoard())
-    const [ myBoard, setMyBoard ] = useState(generateRandomBoard())
+    const [ myBoard
+        // ,setMyBoard 
+    ] = useState(generateRandomBoard())
     const [ winner , setWinner ] = useState('')
     const [ isTransparent , setIsTransparent ] = useState(false)
     useEffect(() => {
@@ -70,7 +72,8 @@ export default function Game() {
     
     // socketIO
 
-    const myBoardRef = document.querySelectorAll('.board')[0]
+    const myBoardRef = document.querySelectorAll('.board')[0]; 
+    console.log(myBoardRef);
     const enemyBoardRef = document.querySelectorAll('.board')[1]
 
     function handleTileClick(tile: TileType, i:number){

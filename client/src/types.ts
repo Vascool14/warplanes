@@ -17,6 +17,7 @@ export type ContextType = {
 export type UserType = {
     username: string;
     email: string;
+    id: string;
     gameStats: {
         wins: number;
         losses: number;

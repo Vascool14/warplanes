@@ -1,7 +1,7 @@
 import Button from "../components/Button";
 import { useState, useContext, useEffect } from "react";
 import { Context } from "../Context";
-import axios from "axios";
+// import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import '../App.css'
 import { TableType } from "../types";
@@ -20,6 +20,7 @@ export default function Tables(){
     ])
     function GetTables(){
         setLoading(true)
+        setTables([...tables, {id: 12, user: 'test'+tables.length}])
         // axios.get('/tables').then(res => {
         //     setTables(res.data)
         //     if(res.data.length == 0) setState({...state, toast: {message: 'No open tables found', success: false}})
@@ -106,40 +107,40 @@ export default function Tables(){
     )
 }
 
-function CreateTable() {
-    const {state, setState} = useContext<any>(Context);
-    const [ name, setName ] = useState('')
-    const [ PIN, setPIN ] = useState('')
-    function CreateTable(){
-        axios.post('/table', {name, PIN})
-        .then(res => {
-            setState({...state, toast: {message: res.data.message, success: true}})
-        })
-        .catch(err => {
-            console.log(err)
-            setState({...state, toast: {message: err.message, success: false}})
-        });
-    }
-    return (
-        <main>
-            <section className="h-full w-[min(22rem,100%)] mx-auto">
-                <form className="flex w-full flex-col gap-3" onSubmit={(e) => {e.preventDefault(); CreateTable()}}>
-                    <h1 className="mt-2">Host your game!</h1>
-                    <div className="input-group w-full">
-                            <input required type="text" minLength={3} maxLength={25} value={name} onChange={(e) => setName(e.target.value)}
-                            />
-                            <label>table Name</label>
-                        </div>
-                    <div className="flex gap-3">
-                        <div className="input-group w-60">
-                            <input type="text" maxLength={4} minLength={4} value={PIN} onChange={(e) => setPIN(e.target.value)}
-                            name="PIN" />
-                            <label>PIN&nbsp;<span className="text-[1rem]">(optional)</span></label>
-                        </div>
-                        <Button text="Create" />
-                    </div>
-                </form>
-            </section>
-        </main>
-    )
-}
+// function CreateTable() {
+//     const {state, setState} = useContext<any>(Context);
+//     const [ name, setName ] = useState('')
+//     const [ PIN, setPIN ] = useState('')
+//     function CreateTable(){
+//         axios.post('/table', {name, PIN})
+//         .then(res => {
+//             setState({...state, toast: {message: res.data.message, success: true}})
+//         })
+//         .catch(err => {
+//             console.log(err)
+//             setState({...state, toast: {message: err.message, success: false}})
+//         });
+//     }
+//     return (
+//         <main>
+//             <section className="h-full w-[min(22rem,100%)] mx-auto">
+//                 <form className="flex w-full flex-col gap-3" onSubmit={(e) => {e.preventDefault(); CreateTable()}}>
+//                     <h1 className="mt-2">Host your game!</h1>
+//                     <div className="input-group w-full">
+//                             <input required type="text" minLength={3} maxLength={25} value={name} onChange={(e) => setName(e.target.value)}
+//                             />
+//                             <label>table Name</label>
+//                         </div>
+//                     <div className="flex gap-3">
+//                         <div className="input-group w-60">
+//                             <input type="text" maxLength={4} minLength={4} value={PIN} onChange={(e) => setPIN(e.target.value)}
+//                             name="PIN" />
+//                             <label>PIN&nbsp;<span className="text-[1rem]">(optional)</span></label>
+//                         </div>
+//                         <Button text="Create" />
+//                     </div>
+//                 </form>
+//             </section>
+//         </main>
+//     )
+// }

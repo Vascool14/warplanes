@@ -1,5 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
-import { Suspense, lazy, useContext, useEffect} from 'react'
+import { Suspense, lazy, useContext
+    // , useEffect
+} from 'react'
 import './App.css'
 import { Context } from './Context'
 import './later.css'
@@ -23,7 +25,9 @@ const GameMusic = lazy(() => import('./components/GameMusic'))
 axios.defaults.baseURL = 'http://localhost:8080/';
 
 export default function App() {
-    const { state, setState } = useContext(Context)
+    const { state
+        // , setState 
+    } = useContext(Context)
         
     // useEffect(() => {
     //     if(document.cookie.length > 0){

@@ -7,10 +7,10 @@
   font-style: normal;
   font-size: large;
   font-weight: 400;
-  src: local('Gamer Station'), url('https://fonts.cdnfonts.com/s/94711/Gamer Station.woff') format('woff');
+  src: local('Gamer Station'), url('/src/font/GamerStation.woff') format('woff');
 }
 :root {
-  font-family: 'Gamer Station', sanf-serif;
+  font-family: 'Gamer Station';
   line-height: 1.5;
   font-weight: 400;
 
