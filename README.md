@@ -1,3 +1,4 @@
+> Thesis project for UBB - Faculty of Mathematics and Computer Science.
 <h1 style="text-align: center; font-size: 4rem">Warplanes</h1>
 
 > The game "Warplanes" is an adaptation of a popular childhood game, played between 2 opponents on paper called "Avioane".
