@@ -48,9 +48,8 @@ export default function App() {
                     <div id="star1"></div>
                     <div id="star2"></div>
                     <div id="star3"></div>
-                </div>:<div id="cloud">
-                <svg width="0"><filter id="filter"><feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="10" /><feDisplacementMap in="SourceGraphic" scale="240"/></filter></svg>
-            </div>}
+                </div>:
+                <div id="cloud"></div>}
             </section>
             {/* <div className="fixed inset-0 w-screen h-screen svgBackground"></div> */}
             <div style={{perspective: 800, zIndex: 1, overflow:'hidden'}}>

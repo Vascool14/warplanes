@@ -26,15 +26,17 @@ export default function SetPlanes({board, setBoard, setBoardReady}: {board:TileT
         if(board[index].body) return triggerError();
         
         // empty tile, add plane to board:
+        if(planes.length >= 3) return triggerError();
+
         for(let i = 0; i < 4; i++){
             let newPlane:PlaneType = {headIndex: index, rotation:ROTATIONS[i]};
             if(canAddPlaneToBoard(board, newPlane)){
-                setPlanes([...planes, newPlane]);
-                setBoard(turnValidValuesToBoard([...planes, newPlane]));
+                const newBoard = [...planes, newPlane];
+                setPlanes(newBoard);
+                setBoard(turnValidValuesToBoard(newBoard));
                 return PlaySound('hit');
             }
         }
-
         // nothing happened, error
         triggerError();
     }

@@ -1,8 +1,4 @@
-.btnWrapper{
-    border-radius: var(--radius);
-    position: relative;
-    /* border: 3px solid var(--gray); */
-}
+.btnWrapper{border-radius: var(--radius);position: relative;}
 .btnWrapper.green{background: var(--greenDark);}
 .btnWrapper.green button{background: var(--green);}
 .btnWrapper.green button::after{background: var(--greenLight);}
@@ -15,7 +11,6 @@
 .btnWrapper.red{background: var(--redDark);}
 .btnWrapper.red button{background: var(--red);}
 .btnWrapper.red button::after{background: var(--redLight);}
-
 .btnWrapper button{
     position: relative; top:-6px;
     border: none; outline: none;
@@ -56,7 +51,6 @@
 .btnWrapper button:active{transform: translateY(6px);box-shadow: 1px 1px 4px -4px var(--white) inset, -1px 1px 4px -4px var(--white) inset;}
 .btnWrapper button:active::after{height: calc(100% - 8px);}
 .btnWrapper button:active::before{width:0px;}
-.svgBackground{ background: radial-gradient(ellipse at center, rgba(255,255,255,0.3)  0%,rgba(0,0,0,0.6) 100%), url('/src/assets/rhombus.svg') repeat 10px 10px;}
 
 .board{
     display: flex ;
@@ -86,10 +80,9 @@
     width: calc(100% - 6px);
     border-radius: 10%;
 }
+.board .tile.enemy{cursor: pointer;}
 .board .tile.enemy:hover{opacity: 0.85;}
-.board .tile.enemy:hover::before{
-    background: transparent;
-}
+.board .tile.enemy:hover::before{background: transparent;}
 .boardNav .iconWrapper{
     position: relative;
     display: flex;
@@ -184,13 +177,13 @@ input:focus{
 }
 
 .showdown .left{
-    background-color : blue;
+    background-color: #1e78d7;
     transform: translateX(-100vw);
     animation: showLeft 3.5s 0.2s ease-in-out;
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); 
 }
 .showdown .right{
-    background-color : red;
+    background-color : #c67;
     transform: translateX(100vw);
     animation: showRight 3.5s 0.2s ease-in-out;
 }

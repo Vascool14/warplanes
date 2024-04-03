@@ -95,6 +95,5 @@ h4{
   color: var(--white);
 }
 @media (min-width: 768px) {
-  :root{  --padding: 2rem; }
   main{ padding: var(--padding) var(--sidePadding); }
 }

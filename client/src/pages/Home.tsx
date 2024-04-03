@@ -3,6 +3,7 @@ import Button from '../components/Button';
 import { useContext } from 'react';
 import { Context } from '../Context'
 import { ContextType } from '../types';
+import MenuSidebar from '../components/MenuSidebar';
 
 export default function Home() {
     const { state } = useContext<ContextType>(Context);
@@ -27,6 +28,7 @@ export default function Home() {
                 </Link>
             </div>
             }   
+            {/* <MenuSidebar /> */}
         </main>
     )
 }

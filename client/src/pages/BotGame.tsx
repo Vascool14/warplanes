@@ -5,7 +5,6 @@ import VanillaTilt from 'vanilla-tilt'
 import isMobile from "is-mobile"
 import { generateRandomBoard, getRandomValidHeadIndex } from "../utils/Board"
 import PlaySound from "../sounds/PlaySound"
-// import Button from "../components/Button"
 import SetPlanes from "./SetPlanes"
 
 export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
@@ -20,7 +19,7 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
     const [ botSelectedTile , setBotSelectedTile ] = useState(100)
     const [ winner , setWinner ] = useState('')
     const [ isTransparent , setIsTransparent ] = useState(false)
-    const [ timer , setTimer ] = useState(10)
+    const [ timer , setTimer ] = useState(-1)
 
     useEffect(() => {
         setState({...state, musicType: 'arena-jingle'})
@@ -29,6 +28,7 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
         setTimeout(() => { 
             setState({...state, canExit: true, musicType: 'battle'}); 
             if(!myTurn) handleBotTurn()
+            setTimer(10)
         }, 4000);
         
         const interval = setInterval(() => {
@@ -40,7 +40,7 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
     }, [isBoardReady])
 
     useEffect(() => {
-        if(timer <= 0){
+        if(timer == 0){
             if(myTurn){setMyTurn(false);handleBotTurn()}
             else setMyTurn(true);
         }
@@ -130,11 +130,12 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
         return hitHeads === 3
     }
     function resetGame(){
-        setMyBoard(generateRandomBoard())
-        setEnemyBoard(generateRandomBoard())
-        setMyTurn(true)
-        setWinner('')
-        setIsTransparent(false)
+        setTimer(-1)
+        // setMyBoard(generateRandomBoard())
+        // setEnemyBoard(generateRandomBoard())
+        // setMyTurn(true)
+        // setWinner('')
+        // setIsTransparent(false)
     }
 
     if(!mobile){
@@ -144,10 +145,8 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
     }
     return (
         <main className={`swipe-up flex flex-col gap-2 ${!mobile && 'sm:gap-8'} items-center justify-center h-screen overflow-hidden pt-0`}>
-            {/* <div className="fixed top-24 right-6 cursor-pointer"> 
-                <Button icon text={isPaused?'=':'|>'} onButtonClick={() => setIsPaused(prev => !prev)} />
-            </div> */}
-            <section className={`boardNav flex justify-center w-full h-[calc(2rem+4vw)] gap-6 ${!mobile && 'sm:gap-8'} min-h-[4.8rem] ${mobile ? 'scale-[0.7]':'mt-2'}`}>
+
+            <section className={`boardNav flex justify-center w-full h-[calc(1.5rem+4vw)] gap-6 ${!mobile && 'sm:gap-8'} min-h-[4rem] ${mobile ? 'scale-[0.7]':'mt-2'}`}>
                 <div className="h-full w-[50%] flex gap-4">
                     <h3 className="max-md:hidden overflow-clip text-[var(--white)] ml-auto mb-[-0.4rem] mt-auto">{user?.username || 'Guest'}</h3>
                     <div className="iconWrapper max-md:ml-auto relative">
@@ -187,7 +186,7 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
                 </div>
             </section>
 
-            <section className={`w-full flex max-sm:flex-col max-sm:mb-auto items-center justify-center gap-6 ${!mobile && 'sm:gap-8'}`} id="boardWrapper">
+            <section className={`w-full flex max-sm:flex-col max-sm:my-auto items-center justify-center gap-6 ${!mobile && 'sm:gap-8'}`} id="boardWrapper">
                 <section className="board" style={{opacity: myTurn?0.4:1}}>
                     {myBoard.map((tile: TileType, i:number) => ( 
                         <div key={i} className="tile"
@@ -201,7 +200,7 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
                 </section>
                 <section className="board" style={{opacity: myTurn?1:0.4}}>
                     {enemyBoard.map((tile: TileType, i:number) => (
-                        <div key={i+100} className="tile cursor-pointer enemy" 
+                        <div key={i+100} className="tile enemy" 
                         style={{background: tile.head && isTransparent?'#999':tile.body && isTransparent?'#c67': tile.hit&&tile.head?'#999':tile.hit&&tile.body?'#c67':'#c677',
                         transform: tile.hit&&!tile.body?'scale(0.01)':'scale(1)'}}
                         onClick={() => handleTileClick(tile, i)}
@@ -211,6 +210,7 @@ export default function BotGame({bot} : {bot:'vasile'|'ioana'|'andrei'}){
                         ))}
                 </section>
             </section>
+
             {winner.length > 0 && 
             <div className="win fixed inset-0 flex items-center justify-center pl-10 text-center">
                 <h1 style={{animation: 'win 0.5s forwards', zIndex: 100, fontSize: 'calc(3rem + 5vw)'}}>{winner}</h1>
