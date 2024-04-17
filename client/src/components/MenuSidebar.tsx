@@ -1,8 +1,15 @@
+import Button from "./Button";
 
 export default function MenuSidebar() {
     return (
-        <div className="fixed top-0 right-[-20rem] hover:right-0 active:right-0 h-screen w-[26rem] bg-[#fff3] p-[var(--padding)] transition-all">
-            <div className="h-full w-full bg-red-500"></div>
+        <div className="fixed top-0 right-0 hover:w-[20rem] active:w-[20rem] h-screen w-[6.3rem] bg-[#fff3] p-[var(--padding)] transition-all flex flex-col">
+            <div className="w-full h-[3rem]">
+                <Button 
+                    text='+' 
+                    color='yellow' 
+                    wFull
+                />
+            </div>
         </div>
     )
 }

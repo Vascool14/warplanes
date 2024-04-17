@@ -14,9 +14,9 @@ export default function Nav() {
             </div>
             }
             
-            <div className="fixed right-0 top-0 m-[var(--padding)] z-[10]">
+            {/* <div className="fixed right-0 top-0 m-[var(--padding)] z-[10]">
                 <Button text='+' icon color='yellow' onButtonClick={() => setState({...state, menuOpen: !state.menuOpen})} />
-            </div>
+            </div> */}
         </nav>
     )
 }

@@ -28,7 +28,7 @@ export default function Home() {
                 </Link>
             </div>
             }   
-            {/* <MenuSidebar /> */}
+            <MenuSidebar />
         </main>
     )
 }
